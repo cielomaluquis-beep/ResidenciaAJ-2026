@@ -5,12 +5,17 @@
 package Interface;
 
 import Model.Usuario;
+import java.util.List;
 
 /**
  *
- * @author LAB 2
+ * @author cielo
  */
 public interface IUsuario {
-    public Usuario validate(String user, String passw);
-    
+    List<Usuario> lista();
+    Usuario validate(String username, String password);
+    int insert(Usuario u);
+    boolean update(Usuario u);
+    Usuario searchById(int id);
+    boolean delete(int id);    
 }

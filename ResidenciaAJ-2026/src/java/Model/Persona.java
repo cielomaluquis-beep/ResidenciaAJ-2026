@@ -6,24 +6,30 @@ package Model;
 
 /**
  *
- * @author LAB 2
+ * @author cielo
  */
 public class Persona {
-    private int id_persona;
+     private int id_persona;
     private String nombre;
-    private String email;
+    private String apellidos;
+    private String dni;
     private String telefono;
-    private String direccion;
+    private String correo;
+    private String fecha_nacimiento;
+    private int estado;
 
     public Persona() {
     }
 
-    public Persona(int id_persona, String nombre, String email, String telefono, String direccion) {
+    public Persona(int id_persona, String nombre, String apellidos, String dni, String telefono, String correo, String fecha_nacimiento, int estado) {
         this.id_persona = id_persona;
         this.nombre = nombre;
-        this.email = email;
+        this.apellidos = apellidos;
+        this.dni = dni;
         this.telefono = telefono;
-        this.direccion = direccion;
+        this.correo = correo;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.estado = estado;
     }
 
     public int getId_persona() {
@@ -42,12 +48,20 @@ public class Persona {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getTelefono() {
@@ -58,14 +72,28 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
-    
-    
+
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
     
 }

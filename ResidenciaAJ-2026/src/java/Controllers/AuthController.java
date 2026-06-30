@@ -23,14 +23,13 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author LAB 2
+ * @author cielo
  */
 @WebServlet(name = "AuthController", urlPatterns = {"/AuthController"})
 public class AuthController extends HttpServlet {
-
-    private final IUsuario uDao = new UsuarioDaoImpl();
+private final IUsuario uDao = new UsuarioDaoImpl();
     private final IPersona pDao = new PersonaDaoImpl();
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -39,10 +38,10 @@ public class AuthController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Hola Servlet</title>");
+            out.println("<title>Servlet AuthController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> hola: Servlet AuthController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AuthController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,87 +62,74 @@ public class AuthController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        //forma de recoger datos de la vista
         String action = request.getParameter("action");
         JsonObject jsonResponse = new JsonObject();
-
         Gson gson = new Gson();
+
         try (PrintWriter out = response.getWriter()) {
-            if (action.equals("validar")) {
+            if ("validar".equals(action)) {
                 String user = request.getParameter("usuario");
                 String pasw = request.getParameter("password");
-                //variable local 
                 Usuario us = uDao.validate(user, pasw);
 
-                if (us != null && us.getUsuario() != null) {
+                if (us != null && us.getUsername() != null) {
                     HttpSession sesion = request.getSession(true);
                     sesion.setAttribute("usuario", us);
-
-                    jsonResponse.addProperty("sucess", true);
+                    jsonResponse.addProperty("success", true);
                     jsonResponse.addProperty("message", "Inicio de Sesion exitoso");
                     jsonResponse.add("userData", gson.toJsonTree(us));
                 } else {
-                    jsonResponse.addProperty("sucess", false);
-                    jsonResponse.addProperty("message", "Usuario ó contraseña incorrecta");
+                    jsonResponse.addProperty("success", false);
+                    jsonResponse.addProperty("message", "Usuario o contrasena incorrecta");
                 }
                 out.print(jsonResponse.toString());
 
-            } else if (action.equals("register")) {
-
+            } else if ("register".equals(action)) {
                 Persona p = new Persona();
                 Usuario u = new Usuario();
 
                 p.setNombre(request.getParameter("nombre"));
-                p.setEmail(request.getParameter("email"));
-                p.setDireccion(request.getParameter("direccion"));
+                p.setApellidos(request.getParameter("apellidos"));
+                p.setDni(request.getParameter("dni"));
                 p.setTelefono(request.getParameter("telefono"));
+                p.setCorreo(request.getParameter("correo"));
+                p.setFecha_nacimiento(request.getParameter("fecha_nacimiento"));
                 u.setPassword(request.getParameter("password"));
 
-                int resultado = pDao.insert(p, u);
+                int resultado = pDao.insertar(p, u);
 
-                jsonResponse.addProperty("sucess", resultado !=0);
-                jsonResponse.addProperty("message",resultado !=0 ? "Registro Sucess":"Error de registro");
+                jsonResponse.addProperty("success", resultado != 0);
+                jsonResponse.addProperty("message", resultado != 0 ? "Registro exitoso" : "Error de registro");
                 out.print(jsonResponse.toString());
 
-            }else if(action.equals("Salir")){
-                HttpSession session= request.getSession(false);
-                if (session !=null) session.invalidate();
-                jsonResponse.addProperty("sucess", true);
-                jsonResponse.addProperty("message","Sesion cerrada");
+            } else if ("Salir".equals(action)) {
+                HttpSession session = request.getSession(false);
+                if (session != null) session.invalidate();
+                jsonResponse.addProperty("success", true);
+                jsonResponse.addProperty("message", "Sesion cerrada");
                 out.print(jsonResponse.toString());
             }
 
         } catch (Exception e) {
             response.setStatus(500);
             jsonResponse.addProperty("success", false);
-            jsonResponse.addProperty("message", "Error" + e.getMessage());
+            jsonResponse.addProperty("message", "Error: " + e.getMessage());
             response.getWriter().print(jsonResponse.toString());
         }
-
+  
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+        return "AuthController";
+    }
 
 }

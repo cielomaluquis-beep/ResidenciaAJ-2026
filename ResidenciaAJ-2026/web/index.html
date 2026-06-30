@@ -1,15 +1,142 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Hello World!!!!</div>
-    </body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A&J Residencia</title>
+    <!-- Incluyendo fuentes y estilos modulares -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Contenedor donde JavaScript inyectará el Header -->
+    <header id="header-placeholder"></header>
+
+    <!-- ================== HERO SECTION ================== -->
+    <section id="inicio" class="hero">
+        <h2>Tu nuevo hogar te espera en el mejor lugar</h2>
+        <p>Habitaciones modernas, seguras y con todos los servicios incluidos para que solo te preocupes por tus estudios.</p>
+        <a href="#habitaciones" class="btn-primary">
+            <i class="fa-solid fa-house"></i> Ver Habitaciones
+        </a>
+    </section>
+
+    <!-- ================== SERVICIOS (BENEFICIOS) ================== -->
+    <section id="servicios" class="benefits">
+        <div class="section-title">
+            <span>BENEFICIOS</span>
+            <h3>Todo lo que necesitas incluido</h3>
+        </div>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="icon-circle icon-wifi">
+                    <i class="fa-solid fa-wifi"></i>
+                </div>
+                <h4>WIFI</h4>
+                <p>Conexión wifi de alta velocidad en todas las habitaciones</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="icon-circle icon-water">
+                    <i class="fa-solid fa-droplet"></i>
+                </div>
+                <h4>Agua 24h</h4>
+                <p>Suministro de agua continuo las 24 horas del día</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="icon-circle icon-sec">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h4>Seguridad</h4>
+                <p>Cámaras y accesos controlados para tu tranquilidad</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="icon-circle icon-wash">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+                <h4>Lavandería recolector</h4>
+                <p>Servicio de lavandería disponible para los inquilinos</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="icon-circle icon-time">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+                <h4>Horario recolector</h4>
+                <p>Horarios flexibles adaptados a tus actividades</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================== HABITACIONES ================== -->
+    <section id="habitaciones" class="rooms">
+        <div class="section-title">
+            <h3>Habitaciones disponibles</h3>
+            <p style="margin-top: 15px; color: #666;">Contamos con habitaciones individuales y dobles con baño privado o compartido, adaptadas a tu presupuesto.</p>
+        </div>
+
+        <div class="rooms-grid">
+            <!-- Habitaciones de ejemplo -->
+            <div class="room-card">
+                <img src="https://images.unsplash.com/photo-1595526114101-23b5bf06a206?auto=format&fit=crop&q=80&w=400" alt="Habitación Individual" class="room-img">
+                <div class="room-info">
+                    <div class="room-price">S/ 450.00 <span style="font-size: 12px; color: #666; font-weight: normal;">/ mes</span></div>
+                    <h4 class="room-title">Habitación Individual 101</h4>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-bed"></i> 1 Cama</span>
+                        <span><i class="fa-solid fa-shower"></i> Compartido</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <img src="https://images.unsplash.com/photo-1522771731470-53ff2eb83f16?auto=format&fit=crop&q=80&w=400" alt="Habitación Doble" class="room-img">
+                <div class="room-info">
+                    <div class="room-price">S/ 650.00 <span style="font-size: 12px; color: #666; font-weight: normal;">/ mes</span></div>
+                    <h4 class="room-title">Habitación Doble 201</h4>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-bed"></i> 2 Camas</span>
+                        <span><i class="fa-solid fa-shower"></i> Privado</span>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="room-card">
+                <img src="https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=400" alt="Habitación Premium" class="room-img">
+                <div class="room-info">
+                    <div class="room-price">S/ 850.00 <span style="font-size: 12px; color: #666; font-weight: normal;">/ mes</span></div>
+                    <h4 class="room-title">Suite Premium 301</h4>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-bed"></i> 1 Queen</span>
+                        <span><i class="fa-solid fa-shower"></i> Privado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================== UBICACION ================== -->
+    <section id="ubicacion" class="location">
+        <div class="section-title">
+            <h3>Ubicación</h3>
+            <p style="margin-top: 15px; color: #666;">Residencia A&J • Ubicada en zona céntrica y segura, cerca de universidades y centros de estudio.</p>
+        </div>
+        
+        <div class="map-container">
+            <!-- Google Maps Embed actualizado -->
+            <iframe src="https://www.google.com/maps?q=-6.484738,-76.381584&z=15&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Contenedor donde JavaScript inyectará el Footer -->
+    <footer id="footer-placeholder"></footer>
+
+    <!-- Cargamos nuestro script al final para el dinamismo -->
+    <script src="assets/js/main.js"></script>
+</body>
 </html>

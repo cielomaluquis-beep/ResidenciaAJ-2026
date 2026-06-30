@@ -4,19 +4,18 @@
  */
 package Interface;
 
-import Model.Persona;
-import Model.Usuario;
+import Model.Contrato;
 import java.util.List;
 
 /**
  *
  * @author cielo
  */
-public interface IPersona {
-      public List<Persona> lista();
-    public int insertar(Persona p, Usuario u);
-    public boolean update(Persona p);
-    public Persona searchById(int id);
-    public boolean delete(int id);
+public interface IContrato {
+    List<Contrato> lista();
+    int insert(Contrato c);
+    boolean update(Contrato c);
+    Contrato searchById(int id);
+    boolean delete(int id);
     
 }

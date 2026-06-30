@@ -4,19 +4,17 @@
  */
 package Interface;
 
-import Model.Persona;
-import Model.Usuario;
+import Model.Rol;
 import java.util.List;
 
 /**
  *
  * @author cielo
  */
-public interface IPersona {
-      public List<Persona> lista();
-    public int insertar(Persona p, Usuario u);
-    public boolean update(Persona p);
-    public Persona searchById(int id);
-    public boolean delete(int id);
-    
+public interface IRol {
+  List<Rol> lista();
+    int insert(Rol r);
+    boolean update(Rol r);
+    Rol searchById(int id);
+    boolean delete(int id);
 }

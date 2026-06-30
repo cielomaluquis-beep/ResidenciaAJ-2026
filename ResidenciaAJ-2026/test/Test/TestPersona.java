@@ -9,54 +9,58 @@ import Dao.UsuarioDaoImpl;
 import Interface.IPersona;
 import Interface.IUsuario;
 import Model.Persona;
-import Model.Rol;
 import Model.Usuario;
 
 /**
  *
- * @author LAB 2
+ * @author cielo
  */
 public class TestPersona {
+
     IPersona dao = new PersonaDaoImpl();
-    IUsuario Udao = new UsuarioDaoImpl();
-    
+    IUsuario uDao = new UsuarioDaoImpl();
+
     public static void main(String[] args) {
         TestPersona t = new TestPersona();
-        //t.insert();
+        // t.insert();
         t.valid_user();
     }
-    
-    public void insert(){
+
+    public void insert() {
         Persona p = new Persona();
-        
-        p.setNombre("Jhan Arly");
-        p.setEmail("jhan@gmail.com");
+        p.setNombre("Cielo");
+        p.setApellidos("Tapia");
+        p.setDni("98765432");
         p.setTelefono("961267470");
-        p.setDireccion("Av. Hallame si puedes");
-        
+        p.setCorreo("cielo@gmail.com");
+        p.setFecha_nacimiento("2005-01-01");
+
         Usuario u = new Usuario();
         u.setPassword("admin123");
-        u.setRol(Rol.CLIENTE);
-        int result = dao.insert(p, u);
-        if (result >0) {
-            System.out.println("Persona y User creada");
-            System.out.println("Usuario:" +p.getEmail());
-            System.out.println("Rol asignado:" +u.getRol());
-        }else{
+
+        int result = dao.insertar(p, u);
+        if (result > 0) {
+            System.out.println("Persona y Usuario creados");
+            System.out.println("Usuario: " + p.getCorreo());
+            System.out.println("Rol asignado: ESTUDIANTE");
+        } else {
             System.out.println("No se pudo realizar el registro");
         }
     }
-    
-    public void valid_user(){
-        Usuario u = Udao.validate("jhan@gmail.com", "admin123");
-        if (u!=null && u.getPersona()!=null) {
-            System.out.println("Bienvenido "+u.getPersona().getNombre());
-            System.out.println("Rol:"+u.getRol());
-            System.out.println("Usuario:"+u.getUsuario());
-            System.out.println("User_id:"+u.getId_usuario());
-            System.out.println("persona_id:"+u.getPersona().getId_persona());
-        }else{
-            System.out.println("credenciales incorrectas");
+
+    public void valid_user() {
+        Usuario u = uDao.validate("cielo@gmail.com", "admin123");
+        if (u != null && u.getPersona() != null) {
+            System.out.println("Bienvenido " + u.getPersona().getNombre() + " " + u.getPersona().getApellidos());
+            System.out.println("Rol: " + u.getRol().getNombre());
+            System.out.println("Usuario: " + u.getUsername());
+            System.out.println("User_id: " + u.getId_Usuario());
+            System.out.println("persona_id: " + u.getPersona().getId_persona());
+            System.out.println("DNI: " + u.getPersona().getDni());
+            System.out.println("Telefono: " + u.getPersona().getTelefono());
+            System.out.println("Correo: " + u.getPersona().getCorreo());
+        } else {
+            System.out.println("Credenciales incorrectas");
         }
         
     }

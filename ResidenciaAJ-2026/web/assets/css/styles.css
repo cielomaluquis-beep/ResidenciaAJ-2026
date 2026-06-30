@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #222b45;
+    line-height: 1.6;
+}
+
+/* ==================================
+   HEADER & NAVBAR
+=================================== */
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    z-index: 100;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #ffffff;
+}
+
+.logo-icon {
+    background-color: #4a6cf7;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 24px;
+}
+
+.logo-text h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.logo-text p {
+    font-size: 11px;
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff9800;
+}
+
+.btn-login {
+    background-color: #ffffff;
+    color: #222b45;
+    padding: 10px 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #4a6cf7;
+    color: #ffffff;
+}
+
+/* ==================================
+   HERO SECTION
+=================================== */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1920') center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 0 20px;
+}
+
+.hero h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    max-width: 800px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.btn-primary {
+    background-color: #ff9800;
+    color: #ffffff;
+    padding: 15px 35px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #e68a00;
+    transform: translateY(-2px);
+}
+
+/* ==================================
+   BENEFITS SECTION
+=================================== */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title span {
+    color: #4a6cf7;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.section-title h3 {
+    font-size: 2.5rem;
+    color: #222b45;
+    margin-top: 10px;
+}
+
+.benefits {
+    padding: 80px 50px;
+    background-color: #ffffff;
+}
+
+.benefits-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.benefit-card {
+    background: #ffffff;
+    border: 1px solid #e4e9f2;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    width: 200px;
+    transition: 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.benefit-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    transform: translateY(-5px);
+}
+
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    font-size: 24px;
+}
+.icon-wifi { background: #e8f0fe; color: #1a73e8; }
+.icon-water { background: #e4f7fb; color: #12b5cb; }
+.icon-sec { background: #e6f4ea; color: #1e8e3e; }
+.icon-wash { background: #f3e8fd; color: #9334e6; }
+.icon-time { background: #fce8e6; color: #d93025; }
+
+.benefit-card h4 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.benefit-card p {
+    font-size: 13px;
+    color: #666666;
+}
+
+/* ==================================
+   ROOMS SECTION
+=================================== */
+.rooms {
+    padding: 80px 50px;
+    background-color: #f8f9fa;
+}
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+}
+
+.room-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+}
+
+.room-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.room-info {
+    padding: 20px;
+}
+
+.room-price {
+    color: #4a6cf7;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.room-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.room-features {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: #666666;
+}
+
+/* ==================================
+   LOCATION SECTION
+=================================== */
+.location {
+    padding: 80px 50px;
+    background-color: #ffffff;
+}
+
+.map-container {
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    height: 400px;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ==================================
+   FOOTER
+=================================== */
+footer {
+    background-color: #222b45;
+    color: #ffffff;
+    padding: 40px 50px;
+    text-align: center;
+}
+
+footer p {
+    opacity: 0.7;
+    font-size: 14px;
+}

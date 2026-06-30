@@ -4,12 +4,18 @@
  */
 package Interface;
 
-import Model.Pedidos;
+import Model.Pago;
+import java.util.List;
 
 /**
  *
- * @author LAB 2
+ * @author cielo
  */
-public interface IPedido {
-    public int generarPedido(Pedidos pedidos);
+public interface IPago {
+    List<Pago> lista();
+    int insert(Pago p);
+    boolean update(Pago p);
+    Pago searchById(int id);
+    boolean delete(int id);
+    
 }
