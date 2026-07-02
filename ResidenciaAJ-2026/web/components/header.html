@@ -1,20 +1,40 @@
-<div class="logo-container">
-    <div class="logo-icon">
-        <i class="fa-solid fa-building"></i>
-    </div>
-    <div class="logo-text">
-        <h1>A&J RESIDENCIA</h1>
-        <p>EL HOGAR IDEAL TE ESPERA</p>
-    </div>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100 z-3" style="top: 0; padding: 20px 50px;">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center gap-3 text-white text-decoration-none" href="index.html">
+            <div class="logo-icon d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-building"></i>
+            </div>
+            <div>
+                <h1 class="h6 mb-0 fw-bold" style="letter-spacing: 1px;">A&J RESIDENCIA</h1>
+                <p class="mb-0 fw-light" style="font-size: 11px; opacity: 0.8;">EL HOGAR IDEAL TE ESPERA</p>
+            </div>
+        </a>
 
-<nav>
-    <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#habitaciones">Habitaciones</a></li>
-        <li><a href="#ubicacion">Ubicación</a></li>
-    </ul>
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <ul class="navbar-nav gap-4 align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal fs-6" href="#inicio" style="transition: 0.3s;" onmouseover="this.style.color='#ff9800'" onmouseout="this.style.color='white'">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal fs-6" href="#servicios" style="transition: 0.3s;" onmouseover="this.style.color='#ff9800'" onmouseout="this.style.color='white'">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal fs-6" href="#habitaciones" style="transition: 0.3s;" onmouseover="this.style.color='#ff9800'" onmouseout="this.style.color='white'">Habitaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal fs-6" href="#ubicacion" style="transition: 0.3s;" onmouseover="this.style.color='#ff9800'" onmouseout="this.style.color='white'">Ubicación</a>
+                </li>
+                <li class="nav-item ms-lg-3">
+                    <a href="login.html" class="btn-login d-inline-block text-center">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
-
-<a href="login.html" class="btn-login">Login</a>
