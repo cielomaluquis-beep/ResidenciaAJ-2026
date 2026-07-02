@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Habitaciones - Residencia A&J</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-dashboard" ><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white active rounded shadow-sm mb-2" id="nav-habitaciones"  style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-clientes" ><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-reservas" ><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-contratos" ><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-pagos" ><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="notificaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-notificaciones" ><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-seguridad" ><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-4 p-lg-5">
+                               <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Gestión de Clientes</h2>
+                        <p class="text-muted mb-0">Mantenimiento del padrón de inquilinos</p>
+                    </div>
+                    <button class="btn rounded-pill px-4 py-2 shadow-sm fw-bold text-white" style="background-color: #4a6cf7;" data-bs-toggle="modal" data-bs-target="#modalCliente">
+                        <i class="fa-solid fa-plus me-2"></i> Nuevo Cliente
+                    </button>
+                </div>
+
+                <!-- Clients Table -->
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <div class="table-responsive">
+                            <table id="table-clientes" class="table table-hover align-middle w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-secondary fw-semibold">ID</th>
+                                        <th class="text-secondary fw-semibold">Documento</th>
+                                        <th class="text-secondary fw-semibold">Nombre Completo</th>
+                                        <th class="text-secondary fw-semibold">Teléfono</th>
+                                        <th class="text-secondary fw-semibold">Email</th>
+                                        <th class="text-secondary fw-semibold">Nacimiento</th>
+                                        <th class="text-secondary fw-semibold text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clientes-tbody">
+                                    <!-- Dynamic content will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal for Nuevo Cliente -->
+    <div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="modalClienteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalClienteLabel">Registrar Nuevo Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="formCliente">
+                        <input type="hidden" id="id_cliente" name="id_cliente">
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label for="nro_documento" class="form-label text-muted fw-semibold">Nro. Documento (DNI)</label>
+                                <input type="text" id="nro_documento" name="nro_documento" class="form-control" maxlength="8" minlength="8" pattern="\d{8}" title="Debe contener exactamente 8 dígitos" required>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="nombre" class="form-label text-muted fw-semibold">Nombres</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="ap_paterno" class="form-label text-muted fw-semibold">Apellido Paterno</label>
+                                <input type="text" id="ap_paterno" name="ap_paterno" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ap_materno" class="form-label text-muted fw-semibold">Apellido Materno</label>
+                                <input type="text" id="ap_materno" name="ap_materno" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label for="telefono" class="form-label text-muted fw-semibold">Teléfono / Celular</label>
+                                <input type="text" id="telefono" name="telefono" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="email" class="form-label text-muted fw-semibold">Correo Electrónico</label>
+                                <input type="email" id="email" name="email" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fecha_nac" class="form-label text-muted fw-semibold">Fecha Nacimiento</label>
+                                <input type="date" id="fecha_nac" name="fecha_nac" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary rounded-pill px-4 shadow-sm" onclick="guardarCliente()">Guardar Cliente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal for Ver Cliente (Solo Lectura) -->
+    <div class="modal fade" id="modalVerCliente" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold">Detalles del Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold">Nro. Documento (DNI)</label>
+                            <input type="text" id="ver_documento" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label text-muted fw-semibold">Nombres</label>
+                            <input type="text" id="ver_nombre" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted fw-semibold">Apellido Paterno</label>
+                            <input type="text" id="ver_ap_paterno" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted fw-semibold">Apellido Materno</label>
+                            <input type="text" id="ver_ap_materno" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold">Teléfono / Celular</label>
+                            <input type="text" id="ver_telefono" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold">Correo Electrónico</label>
+                            <input type="email" id="ver_email" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted fw-semibold">Fecha Nacimiento</label>
+                            <input type="text" id="ver_fecha_nac" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 pt-0 justify-content-center pb-4">
+                    <button type="button" class="btn btn-light rounded-pill px-5" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery and DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarClientes();
+            
+            // Marcar activo en el sidebar
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('active', 'rounded', 'shadow-sm');
+                el.style.backgroundColor = '';
+                if(el.getAttribute('href') === 'clientes.html' || el.innerText.includes('Clientes')) {
+                    el.classList.add('active', 'rounded', 'shadow-sm');
+                    el.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                    el.classList.remove('text-white-50');
+                    el.classList.add('text-white');
+                }
+            });
+        });
+
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(response => {
+                    if (!response.ok) throw new Error("No autenticado");
+                    return response.json();
+                })
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    const permisos = data.permisos || {};
+                    
+                    const roleName = usuario.rol ? usuario.rol.nombre : 'Usuario';
+                    const displayRole = roleName.charAt(0).toUpperCase() + roleName.slice(1).toLowerCase();
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = displayRole;
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+
+                    // Aplicar permisos al sidebar
+                    const modulos = ['dashboard', 'habitaciones', 'clientes', 'reservas', 'contratos', 'pagos', 'notificaciones', 'seguridad', 'catalogo', 'mis_reservas'];
+                    modulos.forEach(mod => {
+                        const navItem = document.getElementById('nav-' + mod);
+                        if (navItem) {
+                            const ruta = '/' + mod + '.html';
+                            const tienePermiso = usuario.id_rol === 1 || (permisos[ruta] && permisos[ruta].verModulo) 
+                                                || (usuario.id_rol === 3 && (mod === 'catalogo' || mod === 'mis_reservas' ));
+                            if (!tienePermiso) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar usuario:", error);
+                    window.location.href = "login.html"; // Redirigir si no está logueado
+                });
+        }
+
+        // ==========================================
+        // CRUD CLIENTES
+        // ==========================================
+
+        const modalCli = new bootstrap.Modal(document.getElementById('modalCliente'));
+
+        function cargarClientes() {
+            fetch('ClienteController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('clientes-tbody');
+                    tbody.innerHTML = '';
+                    
+                    data.forEach(c => {
+                        let fechaTabla = '-';
+                        if (c.fecha_nac) {
+                            const partes = c.fecha_nac.split('-');
+                            if (partes.length === 3) {
+                                fechaTabla = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                            } else {
+                                fechaTabla = c.fecha_nac;
+                            }
+                        }
+                        
+                        const tr = `
+                        <tr>
+                            <td class="fw-bold text-muted">#${c.id_cliente}</td>
+                            <td>${c.nro_documento}</td>
+                            <td class="fw-semibold text-dark">${c.nombre} ${c.ap_paterno} ${c.ap_materno || ''}</td>
+                            <td>${c.telefono || '-'}</td>
+                            <td>${c.email || '-'}</td>
+                            <td>${fechaTabla}</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-info rounded-circle me-1" onclick='abrirVer(${JSON.stringify(c)})' title="Ver Detalles"><i class="fa-solid fa-eye"></i></button>
+                                <button class="btn btn-sm btn-outline-primary rounded-circle me-1" onclick='abrirEditar(${JSON.stringify(c)})' title="Editar"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="eliminarCliente(${c.id_cliente})" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>`;
+                        tbody.innerHTML += tr;
+                    });
+                    
+                    // Initialize DataTables
+                    if ($.fn.DataTable.isDataTable('#table-clientes')) {
+                        $('#table-clientes').DataTable().destroy();
+                    }
+                    $('#table-clientes').DataTable({
+                        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+                        pageLength: 10,
+                        responsive: true
+                    });
+                })
+                .catch(error => console.error("Error al cargar clientes:", error));
+        }
+
+        function abrirEditar(c) {
+            document.getElementById('id_cliente').value = c.id_cliente;
+            document.getElementById('nro_documento').value = c.nro_documento;
+            document.getElementById('nombre').value = c.nombre;
+            document.getElementById('ap_paterno').value = c.ap_paterno;
+            document.getElementById('ap_materno').value = c.ap_materno || '';
+            document.getElementById('telefono').value = c.telefono || '';
+            document.getElementById('email').value = c.email || '';
+            document.getElementById('fecha_nac').value = c.fecha_nac || '';
+            
+            document.getElementById('modalClienteLabel').innerText = "Editar Cliente";
+            modalCli.show();
+        }
+
+        const modalVer = new bootstrap.Modal(document.getElementById('modalVerCliente'));
+
+        function abrirVer(c) {
+            // Formatear fecha si existe
+            let fechaTabla = '-';
+            if (c.fecha_nac) {
+                const partes = c.fecha_nac.split('-');
+                if (partes.length === 3) {
+                    fechaTabla = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                } else {
+                    fechaTabla = c.fecha_nac;
+                }
+            }
+
+            document.getElementById('ver_documento').value = c.nro_documento;
+            document.getElementById('ver_nombre').value = c.nombre;
+            document.getElementById('ver_ap_paterno').value = c.ap_paterno;
+            document.getElementById('ver_ap_materno').value = c.ap_materno || '';
+            document.getElementById('ver_telefono').value = c.telefono || '';
+            document.getElementById('ver_email').value = c.email || '';
+            document.getElementById('ver_fecha_nac').value = fechaTabla;
+            
+            modalVer.show();
+        }
+
+        function eliminarCliente(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = new URLSearchParams();
+                    data.append('id_cliente', id);
+                    
+                    fetch('ClienteController?action=eliminar', {
+                        method: 'POST',
+                        body: data
+                    })
+                    .then(res => res.json())
+                    .then(ok => {
+                        if(ok) {
+                            Swal.fire('¡Eliminado!', 'El cliente ha sido eliminado.', 'success');
+                            cargarClientes();
+                        } else {
+                            Swal.fire('Error', 'No se pudo eliminar el cliente.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+
+        function guardarCliente() {
+            const form = document.getElementById('formCliente');
+            const data = new URLSearchParams(new FormData(form));
+            const id = document.getElementById('id_cliente').value;
+            
+            const action = id ? 'editar' : 'guardar';
+
+            fetch('ClienteController?action=' + action, {
+                method: 'POST',
+                body: data
+            })
+            .then(res => res.json())
+            .then(ok => {
+                if (ok) {
+                    modalCli.hide();
+                    Swal.fire('¡Éxito!', 'El cliente se guardó correctamente.', 'success');
+                    cargarClientes();
+                } else {
+                    Swal.fire('Error', 'Error al guardar cliente. Verifica el número de documento.', 'error');
+                }
+            })
+            .catch(e => console.error("Error al guardar:", e));
+        }
+
+        // Reset modal form on open
+        document.getElementById('modalCliente').addEventListener('show.bs.modal', function () {
+            if (!document.getElementById('id_cliente').value) {
+                document.getElementById('formCliente').reset();
+                document.getElementById('modalClienteLabel').innerText = "Registrar Nuevo Cliente";
+            }
+        });
+        
+        document.getElementById('modalCliente').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('formCliente').reset();
+            document.getElementById('id_cliente').value = '';
+        });
+    </script>
+</body>
+</html>
+
