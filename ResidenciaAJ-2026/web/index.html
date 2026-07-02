@@ -4,139 +4,237 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A&J Residencia</title>
-    <!-- Incluyendo fuentes y estilos modulares -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
-    <!-- Contenedor donde JavaScript inyectará el Header -->
-    <header id="header-placeholder"></header>
-
-    <!-- ================== HERO SECTION ================== -->
-    <section id="inicio" class="hero">
-        <h2>Tu nuevo hogar te espera en el mejor lugar</h2>
-        <p>Habitaciones modernas, seguras y con todos los servicios incluidos para que solo te preocupes por tus estudios.</p>
-        <a href="#habitaciones" class="btn-primary">
-            <i class="fa-solid fa-house"></i> Ver Habitaciones
+    <!-- ============================
+         NAVBAR
+    ============================= -->
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-dark fixed-top w-100" style="z-index: 1000; padding: 20px 50px; transition: background-color 0.3s ease;">
+        <a class="navbar-brand d-flex align-items-center gap-3 text-white text-decoration-none" href="index.html">
+            <div class="logo-icon d-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-building"></i>
+            </div>
+            <div>
+                <h1 class="h6 mb-0 fw-bold" style="letter-spacing: 1px;">A&J RESIDENCIA</h1>
+                <p class="mb-0 fw-light" style="font-size: 11px; opacity: 0.8;">EL HOGAR IDEAL TE ESPERA</p>
+            </div>
         </a>
-    </section>
 
-    <!-- ================== SERVICIOS (BENEFICIOS) ================== -->
-    <section id="servicios" class="benefits">
-        <div class="section-title">
-            <span>BENEFICIOS</span>
-            <h3>Todo lo que necesitas incluido</h3>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav gap-lg-3 align-items-lg-center">
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal" href="#inicio">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal" href="#servicios">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal" href="#habitaciones">Habitaciones</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-normal" href="#ubicacion">Ubicación</a>
+                </li>
+                <li class="nav-item ms-lg-2">
+                    <a href="login.html" class="btn-login">Login</a>
+                </li>
+            </ul>
         </div>
-        
-        <div class="benefits-grid">
-            <div class="benefit-card">
-                <div class="icon-circle icon-wifi">
-                    <i class="fa-solid fa-wifi"></i>
-                </div>
-                <h4>WIFI</h4>
-                <p>Conexión wifi de alta velocidad en todas las habitaciones</p>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="icon-circle icon-water">
-                    <i class="fa-solid fa-droplet"></i>
-                </div>
-                <h4>Agua 24h</h4>
-                <p>Suministro de agua continuo las 24 horas del día</p>
-            </div>
+    </nav>
 
-            <div class="benefit-card">
-                <div class="icon-circle icon-sec">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <h4>Seguridad</h4>
-                <p>Cámaras y accesos controlados para tu tranquilidad</p>
-            </div>
-
-            <div class="benefit-card">
-                <div class="icon-circle icon-wash">
-                    <i class="fa-solid fa-shirt"></i>
-                </div>
-                <h4>Lavandería recolector</h4>
-                <p>Servicio de lavandería disponible para los inquilinos</p>
-            </div>
-
-            <div class="benefit-card">
-                <div class="icon-circle icon-time">
-                    <i class="fa-regular fa-clock"></i>
-                </div>
-                <h4>Horario recolector</h4>
-                <p>Horarios flexibles adaptados a tus actividades</p>
-            </div>
+    <!-- ============================
+         HERO SECTION
+    ============================= -->
+    <section id="inicio" class="hero text-white text-center d-flex align-items-center justify-content-center">
+        <div class="container">
+            <h2 class="fw-bold mb-4 display-4 mx-auto" style="max-width: 800px;">Tu nuevo hogar te espera en el mejor lugar</h2>
+            <p class="mb-5 fw-light lead mx-auto" style="max-width: 600px;">Habitaciones modernas, seguras y con todos los servicios incluidos para que solo te preocupes por tus estudios.</p>
+            <a href="#habitaciones" class="btn-hero">
+                <i class="fa-solid fa-house me-2"></i> Ver Habitaciones
+            </a>
         </div>
     </section>
 
-    <!-- ================== HABITACIONES ================== -->
-    <section id="habitaciones" class="rooms">
-        <div class="section-title">
-            <h3>Habitaciones disponibles</h3>
-            <p style="margin-top: 15px; color: #666;">Contamos con habitaciones individuales y dobles con baño privado o compartido, adaptadas a tu presupuesto.</p>
-        </div>
+    <!-- ============================
+         SERVICIOS / BENEFICIOS
+    ============================= -->
+    <section id="servicios" class="py-5 bg-white">
+        <div class="container text-center py-5">
+            <div class="section-title mb-5">
+                <span>BENEFICIOS</span>
+                <h3 class="fw-bold mt-2">Todo lo que necesitas incluido</h3>
+            </div>
 
-        <div class="rooms-grid">
-            <!-- Habitaciones de ejemplo -->
-            <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1595526114101-23b5bf06a206?auto=format&fit=crop&q=80&w=400" alt="Habitación Individual" class="room-img">
-                <div class="room-info">
-                    <div class="room-price">S/ 450.00 <span style="font-size: 12px; color: #666; font-weight: normal;">/ mes</span></div>
-                    <h4 class="room-title">Habitación Individual 101</h4>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> 1 Cama</span>
-                        <span><i class="fa-solid fa-shower"></i> Compartido</span>
+            <div class="row row-cols-5 g-4 justify-content-center flex-nowrap">
+                <!-- Beneficio 1 -->
+                <div class="col">
+                    <div class="card h-100 border text-center p-4 rounded-4 benefit-card shadow-sm">
+                        <div class="icon-circle icon-wifi mx-auto mb-4">
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                        <h5 class="fw-bold fs-6">WIFI</h5>
+                        <p class="text-muted small mb-0">Conexión wifi de alta velocidad en todas las habitaciones</p>
+                    </div>
+                </div>
+                <!-- Beneficio 2 -->
+                <div class="col">
+                    <div class="card h-100 border text-center p-4 rounded-4 benefit-card shadow-sm">
+                        <div class="icon-circle icon-water mx-auto mb-4">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <h5 class="fw-bold fs-6">Agua 24h</h5>
+                        <p class="text-muted small mb-0">Suministro de agua continuo las 24 horas del día</p>
+                    </div>
+                </div>
+                <!-- Beneficio 3 -->
+                <div class="col">
+                    <div class="card h-100 border text-center p-4 rounded-4 benefit-card shadow-sm">
+                        <div class="icon-circle icon-sec mx-auto mb-4">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h5 class="fw-bold fs-6">Seguridad</h5>
+                        <p class="text-muted small mb-0">Cámaras y accesos controlados para tu tranquilidad</p>
+                    </div>
+                </div>
+                <!-- Beneficio 4 -->
+                <div class="col">
+                    <div class="card h-100 border text-center p-4 rounded-4 benefit-card shadow-sm">
+                        <div class="icon-circle icon-wash mx-auto mb-4">
+                            <i class="fa-solid fa-shirt"></i>
+                        </div>
+                        <h5 class="fw-bold fs-6">Lavandería recolector</h5>
+                        <p class="text-muted small mb-0">Servicio de lavandería disponible para los inquilinos</p>
+                    </div>
+                </div>
+                <!-- Beneficio 5 -->
+                <div class="col">
+                    <div class="card h-100 border text-center p-4 rounded-4 benefit-card shadow-sm">
+                        <div class="icon-circle icon-time mx-auto mb-4">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <h5 class="fw-bold fs-6">Horario recolector</h5>
+                        <p class="text-muted small mb-0">Horarios flexibles adaptados a tus actividades</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1522771731470-53ff2eb83f16?auto=format&fit=crop&q=80&w=400" alt="Habitación Doble" class="room-img">
-                <div class="room-info">
-                    <div class="room-price">S/ 650.00 <span style="font-size: 12px; color: #666; font-weight: normal;">/ mes</span></div>
-                    <h4 class="room-title">Habitación Doble 201</h4>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> 2 Camas</span>
-                        <span><i class="fa-solid fa-shower"></i> Privado</span>
-                    </div>
-                </div>
+    <!-- ============================
+         HABITACIONES
+    ============================= -->
+    <section id="habitaciones" class="py-5" style="background-color: #f8f9fa;">
+        <div class="container py-4 text-center">
+            <div class="section-title mb-5">
+                <h3 class="fw-bold">Habitaciones disponibles</h3>
             </div>
-            
-             <div class="room-card">
-                <img src="https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=400" alt="Habitación Premium" class="room-img">
-                <div class="room-info">
-                    <div class="room-price">S/ 850.00 <span style="font-size: 12px; color: #666; font-weight: normal;">/ mes</span></div>
-                    <h4 class="room-title">Suite Premium 301</h4>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> 1 Queen</span>
-                        <span><i class="fa-solid fa-shower"></i> Privado</span>
-                    </div>
-                </div>
+
+            <div class="row g-4 text-start" id="public-habitaciones-grid">
+                <!-- Habitaciones cargadas dinámicamente aquí -->
             </div>
         </div>
     </section>
 
-    <!-- ================== UBICACION ================== -->
-    <section id="ubicacion" class="location">
-        <div class="section-title">
-            <h3>Ubicación</h3>
-            <p style="margin-top: 15px; color: #666;">Residencia A&J • Ubicada en zona céntrica y segura, cerca de universidades y centros de estudio.</p>
-        </div>
-        
-        <div class="map-container">
-            <!-- Google Maps Embed actualizado -->
-            <iframe src="https://www.google.com/maps?q=-6.484738,-76.381584&z=15&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- ============================
+         UBICACIÓN
+    ============================= -->
+    <section id="ubicacion" class="py-5 bg-white">
+        <div class="container py-4 text-center">
+            <div class="section-title mb-5">
+                <span>UBICACIÓN</span>
+                <h3 class="fw-bold mt-2">Encuéntranos aquí</h3>
+            </div>
+            <div class="rounded-4 overflow-hidden shadow" style="height: 400px;">
+                <iframe src="https://www.google.com/maps?q=-6.484738,-76.381584&z=15&output=embed" width="100%" height="100%" style="border:none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
         </div>
     </section>
 
-    <!-- Contenedor donde JavaScript inyectará el Footer -->
-    <footer id="footer-placeholder"></footer>
+    <!-- ============================
+         FOOTER
+    ============================= -->
+    <footer class="text-center text-white py-5" style="background-color: #222b45;">
+        <div class="container">
+            <div class="d-flex justify-content-center gap-4 mb-4">
+                <a href="#" class="text-white fs-4" style="opacity: 0.8; transition: opacity 0.3s;"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-white fs-4" style="opacity: 0.8; transition: opacity 0.3s;"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-white fs-4" style="opacity: 0.8; transition: opacity 0.3s;"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+            <p class="mb-0 fw-light" style="opacity: 0.7; font-size: 14px;">&copy; 2026 A&J Residencia. Todos los derechos reservados a los autores.</p>
+        </div>
+    </footer>
 
-    <!-- Cargamos nuestro script al final para el dinamismo -->
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar sticky logic
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) {
+                nav.style.backgroundColor = '#222b45';
+                nav.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.backgroundColor = 'transparent';
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('HabitacionController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const grid = document.getElementById('public-habitaciones-grid');
+                    grid.innerHTML = '';
+                    
+                    const disponibles = data.filter(h => h.estado === 'Disponible');
+                    
+                    if (disponibles.length === 0) {
+                        grid.innerHTML = '<div class="col-12 text-center text-muted"><p>No hay habitaciones disponibles en este momento.</p></div>';
+                        return;
+                    }
+                    
+                    disponibles.forEach(h => {
+                        let imgSrc = h.img_habitacion ? 'assets/img/foto-habitacion/' + h.img_habitacion : 'https://placehold.co/400x200?text=Sin+Imagen';
+                        
+                        // Determinar etiqueta de cama según el tipo
+                        let camas = "1 Cama";
+                        if (h.tipo.toLowerCase().includes("doble")) camas = "2 Camas";
+                        else if (h.tipo.toLowerCase().includes("suite")) camas = "1 Queen";
+                        
+                        const card = `
+                        <div class="col-md-4">
+                            <div class="card h-100 border-0 rounded-4 overflow-hidden shadow-sm benefit-card">
+                                <img src="${imgSrc}" class="card-img-top room-img" style="height: 250px; object-fit: cover;" alt="Habitación ${h.numero}">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h4 class="fw-bold room-price mb-0" style="color: #4a6cf7;">S/ ${h.precio.toFixed(2)}</h4>
+                                        <span class="badge bg-success text-white rounded-pill px-3 py-2">${h.estado}</span>
+                                    </div>
+                                    <h5 class="fw-bold text-dark mt-2">${h.tipo} ${h.numero}</h5>
+                                    <div class="d-flex gap-3 text-muted mt-3 small">
+                                        <span><i class="fa-solid fa-bed me-1" style="color:#4a6cf7"></i> ${camas}</span>
+                                        <span><i class="fa-solid fa-shower me-1" style="color:#12b5cb"></i> ${h.tipo_bano}</span>
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="nueva_reserva.html?habitacion=${h.id_habitacion}" class="btn w-100 fw-bold py-2 rounded-pill shadow-sm" style="background-color: #f1f5f9; color: #4a6cf7; border: 1px solid #e2e8f0; transition: all 0.2s;">
+                                            Reservar ahora
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                        grid.innerHTML += card;
+                    });
+                })
+                .catch(e => console.error("Error al cargar habitaciones:", e));
+        });
+    </script>
 </body>
 </html>
