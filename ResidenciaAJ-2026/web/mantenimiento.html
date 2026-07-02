@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Mantenimiento - Residencia A&J</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-dashboard"><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-habitaciones"><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-clientes"><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-reservas"><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-contratos"><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-pagos"><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="mantenimiento.html" class="nav-link text-white active rounded shadow-sm mb-2" id="nav-mantenimiento" style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-wrench me-3"></i>Mantenimiento</a>
+                    <a href="notificaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-notificaciones"><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-seguridad"><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+        <!-- Content -->
+        <div class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-0 d-flex flex-column">
+            <!-- Navbar Header (Si aplica) -->
+            <div id="header-container" class="bg-white border-bottom shadow-sm d-flex justify-content-between align-items-center px-4 py-3">
+                <h4 class="mb-0 text-dark fw-bold">Mantenimiento</h4>
+            </div>
+
+            <!-- Main Content -->
+            <main class="p-4 p-lg-5" style="opacity: 0; transition: opacity 0.3s ease;" id="dashboard-content">
+                <div class="d-flex justify-content-between align-items-end mb-4">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Solicitudes de Mantenimiento</h2>
+                        <p class="text-muted mb-0">Gestione los reportes de fallas enviadas por los estudiantes</p>
+                    </div>
+                </div>
+
+                <!-- Tabla de Incidencias -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table id="table-incidencias" class="table table-hover align-middle mb-0 w-100">
+                                <thead class="table-light text-muted">
+                                    <tr>
+                                        <th class="px-4 py-3">ID</th>
+                                        <th class="py-3">Fecha Reporte</th>
+                                        <th class="py-3">Habitación</th>
+                                        <th class="py-3">Estudiante</th>
+                                        <th class="py-3">Falla</th>
+                                        <th class="py-3">Estado</th>
+                                        <th class="px-4 py-3 text-end">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="incidencias-tbody">
+                                    <!-- Dinámico -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Ver Incidencia -->
+    <div class="modal fade" id="modalVerIncidencia" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold mb-0 text-dark">Detalle de Falla #<span id="ver_id"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-3">
+                    <div class="bg-light p-3 rounded-3 mb-3">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <small class="text-muted d-block mb-1">DESCRIPCIÓN</small>
+                                <span class="fw-semibold" id="ver_descripcion"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <img id="ver_foto" src="" alt="Foto de la falla" class="img-fluid rounded shadow-sm" style="max-height: 300px; display: none;">
+                        <p id="ver_sin_foto" class="text-muted d-none"><i class="fa-solid fa-image-slash me-2"></i>No adjuntó foto</p>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        let tableIncidencias;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarIncidencias();
+        });
+
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(res => res.json())
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    if (usuario.id_rol === 3) { // Si es cliente
+                        window.location.href = 'catalogo.html';
+                        return;
+                    }
+                    const content = document.getElementById('dashboard-content');
+                    if(content) content.style.opacity = '1';
+
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = usuario.rol ? usuario.rol.nombre : 'Admin';
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+                });
+        }
+
+        function cargarIncidencias() {
+            fetch('IncidenciaController?action=listarTodas')
+                .then(res => res.json())
+                .then(data => {
+                    window.incidenciasData = data;
+                    if ($.fn.DataTable.isDataTable('#table-incidencias')) {
+                        tableIncidencias.destroy();
+                    }
+                    
+                    const tbody = document.getElementById('incidencias-tbody');
+                    tbody.innerHTML = '';
+                    
+                    data.forEach(i => {
+                        let badge = '';
+                        if (i.estado === 'Pendiente') badge = '<span class="badge bg-warning text-dark px-2 py-1 rounded-pill"><i class="fa-solid fa-clock me-1"></i> Pendiente</span>';
+                        else if (i.estado === 'En proceso') badge = '<span class="badge bg-info text-dark px-2 py-1 rounded-pill"><i class="fa-solid fa-spinner me-1"></i> En proceso</span>';
+                        else badge = '<span class="badge bg-success px-2 py-1 rounded-pill"><i class="fa-solid fa-check me-1"></i> Resuelto</span>';
+                        
+                        let acciones = `<button class="btn btn-sm btn-outline-primary rounded-pill px-3 me-2 shadow-sm" onclick="verIncidencia(${i.id_incidencia})" title="Ver Detalles">Ver</button>`;
+                        if (i.estado === 'Pendiente') {
+                            acciones += `<button class="btn btn-sm btn-outline-info rounded-pill px-3 me-2 shadow-sm" onclick="cambiarEstado(${i.id_incidencia}, 'En proceso')" title="Atender">Atender</button>`;
+                        }
+                        if (i.estado === 'Pendiente' || i.estado === 'En proceso') {
+                            acciones += `<button class="btn btn-sm btn-outline-success rounded-pill px-3 shadow-sm" onclick="cambiarEstado(${i.id_incidencia}, 'Resuelto')" title="Resolver">Resolver</button>`;
+                        }
+                        
+                        const tr = `
+                        <tr>
+                            <td class="px-4 fw-bold">#${i.id_incidencia}</td>
+                            <td>${i.fecha_reporte}</td>
+                            <td class="fw-semibold text-primary">Hab. ${i.numero_habitacion}</td>
+                            <td>${i.nombre_estudiante}</td>
+                            <td>${i.tipo_falla}</td>
+                            <td>${badge}</td>
+                            <td class="px-4 text-end">${acciones}</td>
+                        </tr>
+                        `;
+                        tbody.innerHTML += tr;
+                    });
+                    
+                    tableIncidencias = $('#table-incidencias').DataTable({
+                        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+                        order: [[0, 'desc']]
+                    });
+                });
+        }
+
+        function verIncidencia(id) {
+            const inc = window.incidenciasData.find(i => i.id_incidencia === id);
+            if (!inc) return;
+
+            document.getElementById('ver_id').textContent = inc.id_incidencia;
+            document.getElementById('ver_descripcion').textContent = inc.descripcion;
+            
+            const img = document.getElementById('ver_foto');
+            const noImg = document.getElementById('ver_sin_foto');
+            
+            if (inc.foto) {
+                img.src = "assets/img/incidencias/" + inc.foto;
+                img.style.display = 'block';
+                noImg.classList.add('d-none');
+            } else {
+                img.style.display = 'none';
+                noImg.classList.remove('d-none');
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('modalVerIncidencia'));
+            modal.show();
+        }
+
+        function cambiarEstado(id, estado) {
+            Swal.fire({
+                title: '¿Confirmar acción?',
+                text: 'Cambiarás el estado a: ' + estado,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#4a6cf7',
+                confirmButtonText: 'Sí, continuar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'actualizarEstado');
+                    formData.append('id_incidencia', id);
+                    formData.append('estado', estado);
+                    
+                    fetch('IncidenciaController', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: formData.toString()
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.status === 'success') {
+                            Swal.fire('¡Actualizado!', 'El estado ha sido modificado', 'success');
+                            cargarIncidencias();
+                        } else {
+                            Swal.fire('Error', data.message || 'No se pudo actualizar', 'error');
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
