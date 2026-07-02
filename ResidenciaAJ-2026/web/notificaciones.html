@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones - Residencia A&J</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-dashboard" ><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-habitaciones" ><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-clientes" ><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-reservas" ><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-contratos" ><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-pagos" ><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="notificaciones.html" class="nav-link text-white active rounded shadow-sm mb-2" id="nav-notificaciones"  style="background-color: rgba(255,255,255,0.1);"><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-seguridad" ><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-4 p-lg-5">
+                
+                <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Mis Notificaciones</h2>
+                        <p class="text-muted mb-0">Alertas de contratos, vencimientos y pagos del sistema</p>
+                    </div>
+                    <button class="btn rounded-pill px-4 py-2 shadow-sm fw-bold text-white text-nowrap" style="background-color: #6c757d;" onclick="marcarTodasLeidas()">
+                        <i class="fa-solid fa-check-double me-2"></i> Marcar todas leídas
+                    </button>
+                </div>
+
+                <!-- Tabla de Notificaciones -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-body p-0">
+                        <div class="table-responsive p-4 pt-3">
+                            <table id="table-notificaciones" class="table table-hover align-middle mb-0 w-100">
+                                <thead class="table-light text-muted">
+                                    <tr>
+                                        <th class="py-3 px-3">Estado</th>
+                                        <th class="py-3">Tipo</th>
+                                        <th class="py-3 w-50">Mensaje</th>
+                                        <th class="py-3">Fecha</th>
+                                        <th class="py-3 text-center px-4">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaNotificaciones">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery and DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarNotificaciones();
+        });
+
+        // User Setup
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(response => {
+                    if (!response.ok) throw new Error("No autenticado");
+                    return response.json();
+                })
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    const permisos = data.permisos || {};
+                    
+                    const roleName = usuario.rol ? usuario.rol.nombre : 'Usuario';
+                    const displayRole = roleName.charAt(0).toUpperCase() + roleName.slice(1).toLowerCase();
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = displayRole;
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+
+                    // Aplicar permisos al sidebar
+                    const modulos = ['dashboard', 'habitaciones', 'clientes', 'reservas', 'contratos', 'pagos', 'notificaciones', 'seguridad', 'catalogo', 'mis_reservas'];
+                    modulos.forEach(mod => {
+                        const navItem = document.getElementById('nav-' + mod);
+                        if (navItem) {
+                            const ruta = '/' + mod + '.html';
+                            const tienePermiso = usuario.id_rol === 1 || (permisos[ruta] && permisos[ruta].verModulo) 
+                                                || (usuario.id_rol === 3 && (mod === 'catalogo' || mod === 'mis_reservas' ));
+                            if (!tienePermiso) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar usuario:", error);
+                    window.location.href = "login.html"; // Redirigir si no está logueado
+                });
+        }
+
+        function cargarNotificaciones() {
+            fetch('AlertaController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('tablaNotificaciones');
+                    
+                    // Si ya existe DataTable, destruirlo antes de re-poblar
+                    if ($.fn.DataTable.isDataTable('#table-notificaciones')) {
+                        $('#table-notificaciones').DataTable().destroy();
+                    }
+                    
+                    tbody.innerHTML = '';
+                    
+                    data.forEach(a => {
+                        let isLeida = a.leida === '1';
+                        let rowClass = !isLeida ? 'bg-light bg-opacity-50' : '';
+                        let textClass = !isLeida ? 'fw-bold text-dark' : 'text-muted';
+                        let icon = !isLeida ? '<i class="fa-solid fa-circle text-primary small"></i>' : '<i class="fa-regular fa-circle text-muted small"></i>';
+                        
+                        let tipoBadge = '';
+                        if (a.tipo_alerta === 'Vencimiento Contrato' || a.tipo_alerta === 'Contrato Vencido') tipoBadge = '<span class="badge bg-warning text-dark border"><i class="fa-solid fa-clock me-1"></i>Vencimiento</span>';
+                        else if (a.tipo_alerta === 'Saldo Pendiente') tipoBadge = '<span class="badge bg-danger border"><i class="fa-solid fa-dollar-sign me-1"></i>Saldo</span>';
+                        else tipoBadge = `<span class="badge bg-info text-dark border">${a.tipo_alerta}</span>`;
+                        
+                        const tr = `
+                        <tr class="${rowClass}">
+                            <td class="text-center px-3">${icon}</td>
+                            <td>${tipoBadge}</td>
+                            <td class="${textClass}">${a.mensaje}</td>
+                            <td class="${textClass}">${a.fecha_creacion}</td>
+                            <td class="text-center px-4">
+                                ${!isLeida ? `<button class="btn btn-sm btn-light rounded-circle text-success shadow-sm me-1" onclick="marcarLeida(${a.id_alerta}, true)" title="Marcar leída"><i class="fa-solid fa-check"></i></button>` : ''}
+                            </td>
+                        </tr>`;
+                        tbody.innerHTML += tr;
+                    });
+                    
+                    $('#table-notificaciones').DataTable({
+                        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+                        pageLength: 10,
+                        responsive: true,
+                        order: [] // No ordenar automáticamente para respetar el DESC de la BD
+                    });
+                })
+                .catch(e => console.error("Error listando", e));
+        }
+
+        function marcarLeida(id, reload) {
+            const data = new URLSearchParams();
+            data.append('id_alerta', id);
+            
+            fetch('AlertaController?action=marcarLeida', {
+                method: 'POST',
+                body: data
+            }).then(() => {
+                if(reload) cargarNotificaciones();
+            });
+        }
+        
+        function marcarTodasLeidas() {
+            fetch('AlertaController?action=marcarTodasLeidas', {
+                method: 'POST'
+            }).then(() => {
+                cargarNotificaciones();
+            });
+        }
+    </script>
+</body>
+</html>
