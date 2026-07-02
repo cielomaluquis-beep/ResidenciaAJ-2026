@@ -27,10 +27,10 @@ public class RolDaoImpl implements IRol{
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Rol r = new Rol();
-                r.setId_Rol(rs.getInt("id_Rol"));
+                r.setId_rol(rs.getInt("id_Rol"));
                 r.setNombre(rs.getString("Nombre"));
                 r.setDescripcion(rs.getString("Descripcion"));
-                r.setEstado(rs.getInt("Estado"));
+                r.setEstado(String.valueOf(rs.getInt("Estado")));
                 lista.add(r);
             }
         } catch (SQLException e) {
@@ -49,12 +49,12 @@ public class RolDaoImpl implements IRol{
             PreparedStatement st = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, r.getNombre());
             st.setString(2, r.getDescripcion());
-            st.setInt(3, r.getEstado());
+            st.setString(3, r.getEstado());
             resultado = st.executeUpdate();
             if (resultado > 0) {
                 ResultSet rs = st.getGeneratedKeys();
                 if (rs.next()) {
-                    r.setId_Rol(rs.getInt(1));
+                    r.setId_rol(rs.getInt(1));
                 }
             }
         } catch (SQLException e) {
@@ -70,8 +70,8 @@ public class RolDaoImpl implements IRol{
             PreparedStatement st = cn.prepareStatement(query);
             st.setString(1, r.getNombre());
             st.setString(2, r.getDescripcion());
-            st.setInt(3, r.getEstado());
-            st.setInt(4, r.getId_Rol());
+            st.setInt(3, Integer.parseInt(r.getEstado()));
+            st.setInt(4, r.getId_rol());
             return st.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error update rol: " + e.getMessage());
@@ -89,10 +89,10 @@ public class RolDaoImpl implements IRol{
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 r = new Rol();
-                r.setId_Rol(rs.getInt("id_Rol"));
+                r.setId_rol(rs.getInt("id_Rol"));
                 r.setNombre(rs.getString("Nombre"));
                 r.setDescripcion(rs.getString("Descripcion"));
-                r.setEstado(rs.getInt("Estado"));
+                r.setEstado(String.valueOf(rs.getInt("Estado")));
             }
         } catch (SQLException e) {
             System.out.println("Error buscar rol: " + e.getMessage());
