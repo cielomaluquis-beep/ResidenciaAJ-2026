@@ -1,91 +1,76 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Usuario {
-
-    private int id_Usuario;
-    private String username;
-    private String password;
-    private int id_persona;
-    private int id_Rol;
-    private int estado;
-    private Persona persona;
+    private int id_usuario;
+    private String email;
+    private String contrasena;
+    private String nombre;
+    private int habilitado;
+    private int id_rol;
     private Rol rol;
 
     public Usuario() {
     }
 
-    public Usuario(int id_Usuario, String username, String password, int id_persona, int id_Rol, int estado, Persona persona, Rol rol) {
-        this.id_Usuario = id_Usuario;
-        this.username = username;
-        this.password = password;
-        this.id_persona = id_persona;
-        this.id_Rol = id_Rol;
-        this.estado = estado;
-        this.persona = persona;
+    public Usuario(int id_usuario, String email, String contrasena, String nombre, int habilitado, int id_rol, Rol rol) {
+        this.id_usuario = id_usuario;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.habilitado = habilitado;
+        this.id_rol = id_rol;
         this.rol = rol;
     }
 
-    public int getId_Usuario() {
-        return id_Usuario;
+    public int getId_usuario() {
+        return id_usuario;
     }
 
-    public void setId_Usuario(int id_Usuario) {
-        this.id_Usuario = id_Usuario;
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public int getId_persona() {
-        return id_persona;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setId_persona(int id_persona) {
-        this.id_persona = id_persona;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId_Rol() {
-        return id_Rol;
+    public int getHabilitado() {
+        return habilitado;
     }
 
-    public void setId_Rol(int id_Rol) {
-        this.id_Rol = id_Rol;
+    public void setHabilitado(int habilitado) {
+        this.habilitado = habilitado;
     }
 
-    public int getEstado() {
-        return estado;
+    public int getId_rol() {
+        return id_rol;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
-
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setId_rol(int id_rol) {
+        this.id_rol = id_rol;
     }
 
     public Rol getRol() {
@@ -110,12 +95,7 @@ public class Usuario {
             }
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
             throw new RuntimeException("Error al generar el hash", e);
         }
-
     }
-
-    
-
 }
