@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Residencia A&J</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <!-- html2pdf.js for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="mantenimiento.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-wrench me-3"></i>Mantenimiento</a>
+                    <a href="notificaciones.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                    <a href="reportes.html" class="nav-link text-white active rounded shadow-sm mb-2" style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-file-pdf me-3"></i>Reportes</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-4 p-lg-5" style="opacity: 0; transition: opacity 0.3s ease;" id="dashboard-content">
+                <div class="d-flex justify-content-between align-items-end mb-4">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Exportar Reportes</h2>
+                        <p class="text-muted mb-0">Generar y descargar informes en formato PDF (Exclusivo Gerente)</p>
+                    </div>
+                    <button class="btn btn-primary rounded-pill px-4" onclick="generarPDF()">
+                        <i class="fa-solid fa-download me-2"></i>Descargar PDF
+                    </button>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                    <div class="card-body p-4" id="reporte-pdf-container">
+                        <!-- Cabecera del reporte para el PDF -->
+                        <div class="text-center mb-4 border-bottom pb-3">
+                            <h3 class="fw-bold text-dark">A&J RESIDENCIA</h3>
+                            <h5 class="text-muted">Reporte Gerencial Consolidado</h5>
+                            <small class="text-muted">Generado el: <span id="fecha-reporte"></span></small>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <h6 class="text-muted fw-bold mb-1">Ingresos (Mes)</h6>
+                                    <h3 class="fw-bold text-success mb-0" id="rep-ingresos">S/ 0.00</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <h6 class="text-muted fw-bold mb-1">Ocupación</h6>
+                                    <h3 class="fw-bold text-primary mb-0" id="rep-ocupacion">0%</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bg-light rounded p-3 text-center">
+                                    <h6 class="text-muted fw-bold mb-1">Contratos Activos</h6>
+                                    <h3 class="fw-bold text-dark mb-0" id="rep-contratos">0</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">Detalle de Habitaciones Ocupadas</h6>
+                            <p class="text-muted small">Este es un reporte automático generado por el sistema de gestión. Muestra las métricas operativas clave para la toma de decisiones estratégicas.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            document.getElementById('fecha-reporte').textContent = new Date().toLocaleDateString();
+        });
+
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(res => res.json())
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    if (usuario.id_rol !== 1) { // SOLO GERENTE
+                        Swal.fire('Acceso Denegado', 'Solo el Gerente puede acceder a este módulo.', 'error').then(() => {
+                            window.location.href = 'dashboard.html';
+                        });
+                        return;
+                    }
+                    
+                    const content = document.getElementById('dashboard-content');
+                    if(content) content.style.opacity = '1';
+
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = usuario.rol ? usuario.rol.nombre : 'Admin';
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+                    
+                    cargarDatosReporte();
+                });
+        }
+
+        function cargarDatosReporte() {
+            fetch('DashboardController')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'error') return;
+                    document.getElementById('rep-ingresos').textContent = 'S/ ' + data.ingresosMes.toFixed(2);
+                    document.getElementById('rep-contratos').textContent = data.contActivos;
+                    let tasa = (data.habOcupadas / data.habTotales) * 100;
+                    if (isNaN(tasa)) tasa = 0;
+                    document.getElementById('rep-ocupacion').textContent = tasa.toFixed(1) + '%';
+                })
+                .catch(e => console.error("Error al cargar datos", e));
+        }
+
+        function generarPDF() {
+            const element = document.getElementById('reporte-pdf-container');
+            const opt = {
+                margin:       1,
+                filename:     'Reporte_Gerencial.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            Swal.fire({ title: 'Generando PDF...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                Swal.close();
+            });
+        }
+    </script>
+</body>
+</html>
