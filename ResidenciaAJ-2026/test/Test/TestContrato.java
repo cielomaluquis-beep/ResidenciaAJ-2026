@@ -4,9 +4,10 @@
  */
 package Test;
 
-import Dao.ContratoDaoImpl;
+import Dao.ContratoDaoImp;
 import Interface.IContrato;
 import Model.Contrato;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -14,20 +15,21 @@ import java.util.List;
  * @author cielo
  */
 public class TestContrato {
-    IContrato dao = new ContratoDaoImpl();
-   public static void main(String[] args) {
+    IContrato dao = new ContratoDaoImp();
+    
+    public static void main(String[] args) {
         TestContrato t = new TestContrato();
-//        t.testListar();
         t.testInsertar();
+        t.testListar();
     }
 
     public void testListar() {
         System.out.println("=== LISTAR CONTRATOS ===");
-        List<Contrato> lista = dao.lista();
+        List<Contrato> lista = dao.listar();
         for (Contrato c : lista) {
             System.out.println("ID: " + c.getId_contrato() + 
-                             " | Persona: " + c.getPersona().getNombre() + " " + c.getPersona().getApellidos() +
-                             " | Habitacion: " + c.getHabitacion().getNumero() +
+                             " | Cliente: " + c.getClienteNombreCompleto() +
+                             " | Habitacion: " + c.getHabitacionNumero() +
                              " | Inicio: " + c.getFecha_inicio() + " | Fin: " + c.getFecha_fin());
         }
     }
@@ -35,16 +37,19 @@ public class TestContrato {
     public void testInsertar() {
         System.out.println("=== INSERTAR CONTRATO ===");
         Contrato c = new Contrato();
-        c.setId_persona(1);
+        c.setId_cliente(1);
         c.setId_habitacion(1);
-        c.setFecha_inicio("2026-06-01");
-        c.setFecha_fin("2026-12-31");
-        c.setEstado(1);
+        c.setId_tipoContrato(1);
+        c.setId_usuario(1); // El admin o empleado que registra
+        c.setFecha_inicio(Date.valueOf("2026-06-01"));
+        c.setFecha_fin(Date.valueOf("2026-12-31"));
+        c.setEstado("1");
+        
         int result = dao.insert(c);
         if (result > 0) {
-            System.out.println("Contrato registrado con ID: " + c.getId_contrato());
+            System.out.println("Contrato registrado exitosamente con el ID!");
         } else {
-            System.out.println("Error al registrar contrato");
+            System.out.println("Error al registrar contrato. (Verifica que los IDs existan en BD)");
         }
     }
 }
