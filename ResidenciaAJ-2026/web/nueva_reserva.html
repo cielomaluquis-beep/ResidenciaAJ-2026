@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Reserva - A&J Residencia</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-light">
+
+    <div class="d-flex" style="min-height: 100vh;">
+        
+        <!-- Sidebar Dinámico -->
+        <div id="sidebar-container" class="bg-dark text-white" style="width: 250px; min-height: 100vh;">
+            <div class="p-4 text-center border-bottom border-secondary">
+                <i class="fa-solid fa-building fa-3x text-primary mb-2"></i>
+                <h4 class="fw-bold mb-0">A&J Residencia</h4>
+                <small class="text-white-50">Portal del Inquilino</small>
+            </div>
+            
+            <div class="mt-4 px-3 text-center mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-2 shadow" style="width: 60px; height: 60px;">
+                    <span id="user-avatar-initial" class="fs-3 fw-bold text-white">U</span>
+                </div>
+                <h6 id="user-name-display" class="fw-bold mb-0 text-truncate">Cargando...</h6>
+                <small id="user-role-display" class="text-white-50">Rol</small>
+            </div>
+
+            <nav class="nav flex-column flex-grow-1 p-3">
+                <a href="dashboard.html" id="nav-dashboard" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                <a href="catalogo.html" id="nav-catalogo" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-images me-3"></i>Catálogo</a>
+                <a href="habitaciones.html" id="nav-habitaciones" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                <a href="clientes.html" id="nav-clientes" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                <a href="reservas.html" id="nav-reservas" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                <a href="mis_reservas.html" id="nav-mis_reservas" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-calendar-check me-3"></i>Mis Reservas</a>
+                <a href="contratos.html" id="nav-contratos" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                <a href="pagos.html" id="nav-pagos" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                <a href="notificaciones.html" id="nav-notificaciones" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                <a href="seguridad.html" id="nav-seguridad" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                
+                <div class="mt-auto pt-4 pb-2 text-center">
+                    <button onclick="window.location.href='AuthController?action=Salir'" class="btn btn-outline-light btn-sm px-4 rounded-pill">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i>Salir
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-grow-1 d-flex flex-column" style="width: calc(100% - 250px);">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <h2 class="fw-bold mb-0 text-dark">Nueva Reserva</h2>
+                </div>
+                <div class="ms-auto">
+                    <a href="catalogo.html" class="btn btn-outline-secondary rounded-pill px-4">Volver al Catálogo</a>
+                </div>
+            </nav>
+
+            <!-- Main Container -->
+            <div class="p-4 flex-grow-1 overflow-auto">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        
+                        <div class="text-center mb-4">
+                            <h2 class="fw-bold text-dark">Completa tu Reserva</h2>
+                            <p class="text-muted">Por favor, adjunta tu comprobante de adelanto para confirmar.</p>
+                        </div>
+
+                        <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4 p-md-5">
+                        <form id="formReserva" action="ReservaController" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="insertar">
+                            <input type="hidden" name="id_habitacion" id="id_habitacion">
+
+                            <h5 class="fw-bold mb-4 text-primary"><i class="fa-solid fa-bed me-2"></i> Detalles de Habitación</h5>
+                            <div class="p-3 bg-light rounded-3 mb-4 d-flex justify-content-between align-items-center" id="roomDetailsLoading">
+                                <span class="text-muted"><i class="fa-solid fa-spinner fa-spin me-2"></i> Cargando detalles...</span>
+                            </div>
+                            <div class="p-3 bg-light rounded-3 mb-4 d-none" id="roomDetails">
+                            </div>
+
+                            <h5 class="fw-bold mb-4 text-primary mt-5"><i class="fa-solid fa-calendar-days me-2"></i> Datos de Reserva</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label fw-semibold text-secondary small">FECHA POSIBLE DE INGRESO</label>
+                                    <input type="date" name="fecha_posibleIni" id="fecha_posibleIni" class="form-control bg-light border-0 shadow-sm" required>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold mb-4 text-primary mt-4"><i class="fa-solid fa-file-invoice-dollar me-2"></i> Pago de Adelanto</h5>
+                            <div class="alert alert-info border-0 shadow-sm d-flex align-items-center mb-4">
+                                <i class="fa-solid fa-circle-info fs-4 me-3"></i>
+                                <div>
+                                    Para asegurar tu reserva, debes realizar un adelanto a nuestras cuentas bancarias (BCP: 191-xxxx-xxxx) o Yape (987654321).
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label class="form-label fw-semibold text-secondary small">MONTO ABONADO (S/)</label>
+                                    <input type="number" step="0.01" name="monto" class="form-control bg-light border-0 shadow-sm" placeholder="Ej. 100.00" required>
+                                </div>
+                                <div class="col-12 mb-4">
+                                    <label class="form-label fw-semibold text-secondary small">FOTO DEL COMPROBANTE</label>
+                                    <input type="file" name="comprobante" class="form-control bg-light border-0 shadow-sm" accept="image/*" required>
+                                </div>
+                            </div>
+
+                            <hr class="my-5 text-muted">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="index.html" class="text-decoration-none text-muted fw-semibold"><i class="fa-solid fa-arrow-left me-2"></i> Cancelar</a>
+                                <button type="submit" class="btn fw-bold py-3 px-5 rounded-pill text-white shadow-sm" style="background-color: #28a745;">
+                                    Confirmar Reserva &nbsp;<i class="fa-solid fa-check"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            
+            <footer class="bg-white border-top py-3 mt-auto text-center text-muted">
+                <small>&copy; 2026 Residencia A&J. Todos los derechos reservados.</small>
+            </footer>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarDatosHabitacion();
+        });
+
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(response => {
+                    if (!response.ok) throw new Error("No autenticado");
+                    return response.json();
+                })
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    const permisos = data.permisos || {};
+                    
+                    const roleName = usuario.rol ? usuario.rol.nombre : 'Usuario';
+                    const displayRole = roleName.charAt(0).toUpperCase() + roleName.slice(1).toLowerCase();
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = displayRole;
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+
+                    // Aplicar permisos al sidebar
+                    const modulos = ['dashboard', 'habitaciones', 'clientes', 'reservas', 'contratos', 'pagos', 'notificaciones', 'seguridad', 'catalogo', 'mis_reservas'];
+                    modulos.forEach(mod => {
+                        const navItem = document.getElementById('nav-' + mod);
+                        if (navItem) {
+                            const ruta = '/' + mod + '.html';
+                            const tienePermiso = usuario.id_rol === 1 || (permisos[ruta] && permisos[ruta].verModulo) 
+                                                || (usuario.id_rol === 3 && (mod === 'catalogo' || mod === 'mis_reservas' ));
+                            if (!tienePermiso) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar usuario:", error);
+                    window.location.href = "login.html"; // Redirigir si no está logueado
+                });
+        }
+
+        function cargarDatosHabitacion() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id_habitacion = urlParams.get('habitacion');
+            
+            if(!id_habitacion) {
+                Swal.fire('Error', 'No se ha seleccionado ninguna habitación', 'error')
+                    .then(() => window.location.href = 'index.html');
+                return;
+            }
+            
+            document.getElementById('id_habitacion').value = id_habitacion;
+
+            fetch('HabitacionController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const hab = data.find(h => h.id_habitacion == id_habitacion);
+                    if(!hab) throw new Error("Habitación no encontrada");
+
+                    document.getElementById('roomDetailsLoading').classList.add('d-none');
+                    const details = document.getElementById('roomDetails');
+                    details.classList.remove('d-none');
+                    details.classList.add('d-flex');
+                    
+                    details.innerHTML = `
+                        <div>
+                            <h5 class="fw-bold mb-1 text-dark">${hab.tipo} N° ${hab.numero}</h5>
+                            <span class="text-muted small"><i class="fa-solid fa-border-all me-1"></i> Piso ${hab.piso} &nbsp;|&nbsp; <i class="fa-solid fa-shower me-1"></i> ${hab.tipo_bano}</span>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold mb-0" style="color: #4a6cf7;">S/ ${hab.precio.toFixed(2)}<span class="fs-6 text-muted fw-normal">/mes</span></h4>
+                        </div>
+                    `;
+                })
+                .catch(e => {
+                    console.error(e);
+                    document.getElementById('roomDetailsLoading').innerHTML = '<span class="text-danger">Error al cargar datos de habitación.</span>';
+                });
+        }
+
+        const hoy = new Date().toISOString().split('T')[0];
+        document.getElementById("fecha_posibleIni").setAttribute("min", hoy);
+
+        document.getElementById("formReserva").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            Swal.fire({ title: 'Procesando...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
+            fetch('ReservaController', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    Swal.fire('¡Éxito!', 'Tu reserva se ha enviado. La validaremos pronto.', 'success').then(() => {
+                        window.location.href = 'mis_reservas.html';
+                    });
+                } else {
+                    Swal.fire('Error', data.message || 'No se pudo guardar la reserva', 'error');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire('Error', 'Error de conexión', 'error');
+            });
+        });
+    </script>
+</body>
+</html>
