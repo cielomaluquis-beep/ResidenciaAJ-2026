@@ -17,8 +17,9 @@ public class ConexionSingleton {
         try {
             if (connection == null) {
                 Runtime.getRuntime().addShutdownHook(new getClose());
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/db_residencia_aj_2026_", "root", "admin");
+                Class.forName("oracle.jdbc.OracleDriver");
+                // Asegúrate de cambiar 'xe', 'usuario' y 'contraseña' por los de tu base de datos Oracle
+                connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "RESIDENCIA", "admin123");
                 System.out.println("Entro al if");
             }
             return connection;
