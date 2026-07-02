@@ -1,32 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
-/**
- *
- * @author cielo
- */
+import java.sql.Date;
+
 public class Pago {
-    
     private int id_pago;
-    private int id_contrato;
     private double monto;
-    private String fecha;
+    private Date fecha;
     private String metodo_pago;
-    private Contrato contrato;
+    private String concepto;
+    private String img_comprobante;
+    private String estado;
+    private int id_reserva; // Can be 0 if null in DB
+    private int id_contrato; // Can be 0 if null in DB
+    private int id_usuario;
+
+    // Transient attributes for view
+    private String clienteNombreCompleto;
+    private String usuarioNombre;
+    private String detalleAsociado; // p.ej. "Contrato #5 - Hab. 101"
+    private String numHabitacion;
 
     public Pago() {
-    }
-
-    public Pago(int id_pago, int id_contrato, double monto, String fecha, String metodo_pago, Contrato contrato) {
-        this.id_pago = id_pago;
-        this.id_contrato = id_contrato;
-        this.monto = monto;
-        this.fecha = fecha;
-        this.metodo_pago = metodo_pago;
-        this.contrato = contrato;
     }
 
     public int getId_pago() {
@@ -37,14 +31,6 @@ public class Pago {
         this.id_pago = id_pago;
     }
 
-    public int getId_contrato() {
-        return id_contrato;
-    }
-
-    public void setId_contrato(int id_contrato) {
-        this.id_contrato = id_contrato;
-    }
-
     public double getMonto() {
         return monto;
     }
@@ -53,11 +39,11 @@ public class Pago {
         this.monto = monto;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -69,14 +55,83 @@ public class Pago {
         this.metodo_pago = metodo_pago;
     }
 
-    public Contrato getContrato() {
-        return contrato;
+    public String getConcepto() {
+        return concepto;
     }
 
-    public void setContrato(Contrato contrato) {
-        this.contrato = contrato;
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
     }
-    
-    
-    
+
+    public String getImg_comprobante() {
+        return img_comprobante;
+    }
+
+    public void setImg_comprobante(String img_comprobante) {
+        this.img_comprobante = img_comprobante;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getId_reserva() {
+        return id_reserva;
+    }
+
+    public void setId_reserva(int id_reserva) {
+        this.id_reserva = id_reserva;
+    }
+
+    public int getId_contrato() {
+        return id_contrato;
+    }
+
+    public void setId_contrato(int id_contrato) {
+        this.id_contrato = id_contrato;
+    }
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public String getClienteNombreCompleto() {
+        return clienteNombreCompleto;
+    }
+
+    public void setClienteNombreCompleto(String clienteNombreCompleto) {
+        this.clienteNombreCompleto = clienteNombreCompleto;
+    }
+
+    public String getUsuarioNombre() {
+        return usuarioNombre;
+    }
+
+    public void setUsuarioNombre(String usuarioNombre) {
+        this.usuarioNombre = usuarioNombre;
+    }
+
+    public String getDetalleAsociado() {
+        return detalleAsociado;
+    }
+
+    public void setDetalleAsociado(String detalleAsociado) {
+        this.detalleAsociado = detalleAsociado;
+    }
+
+    public String getNumHabitacion() {
+        return numHabitacion;
+    }
+
+    public void setNumHabitacion(String numHabitacion) {
+        this.numHabitacion = numHabitacion;
+    }
 }
