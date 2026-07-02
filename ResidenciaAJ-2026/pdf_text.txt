@@ -1,0 +1,717 @@
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 1 
+CASO DE ESTUDIO 
+Automatización del Proceso de Gestión de Alquiler 
+(Sistema Alquiler de Cuartos) 
+Residencia A&J 
+Ingeniería de Requerimientos — Documento Completo 
+Versión 1.0 · 2026 
+Integrantes: Cielo Saraí Maluquis Tapia · Keyla Zamora Pilco · Fabiola Isabel T. Satalaya 
+  
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 2 
+CONTEXTO DE LA EMPRESA 
+ 
+Campo Detalle 
+Empresa Residencia A&J 
+Sector Alquiler de habitaciones para estudiantes universitarios 
+Ubicación Jr. Mateo Pumacahua 516, Morales 
+Problema Gestión manual (cuadernos/Excel) → desorden, errores, pérdida de información y 
+ausencia de alertas 
+Objetivo Digitalizar la gestión de habitaciones, estudiantes, contratos, pagos y mantenimiento 
+ 
+La Residencia A&J es un negocio privado de tamaño pequeño a mediano dedicado al alquiler de habitaciones 
+exclusivamente para estudiantes universitarios, ubicado en el Jr. Mateo Pumacahua 516, Morales. Brinda 
+alojamiento a jóvenes provenientes de distintas ciudades que buscan un lugar cercano, seguro y accesible durante 
+su etapa académica. La residencia cuenta con dos pisos: el primero dispone de dos entradas —cochera principal 
+y secundaria— para la movilidad de los residentes; las habitaciones se encuentran en el segundo piso. 
+  
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 3 
+SECCIÓN 1 — ENTREVISTAS A STAKEHOLDERS 
+ 
+1.1 Gerente — Jorge A. T. Chavez 
+Entrevistador: Buenos días, señor Jorge. ¿Cuál es el mayor problema que enfrenta la residencia hoy? 
+Sr. Jorge: El recordatorio de los horarios del camión recolector, la renovación de contratos y el control de pagos. 
+Todo se maneja manualmente y es muy fácil olvidar o cometer errores. 
+Entrevistador: ¿Cuántas habitaciones tiene la residencia y cuál es su meta de crecimiento? 
+Sr. Jorge: Actualmente contamos con habitaciones en el segundo piso. Mi meta es construir más habitaciones y 
+áreas comunes para los residentes en el mediano plazo. 
+Entrevistador: ¿Qué esperaría de un sistema automatizado? 
+Sr. Jorge: Que nos permita enviar mensajes de recordatorio automáticos a los residentes en horarios 
+establecidos, que la página web difunda los servicios que prestamos y que nos ayude a captar nuevos residentes 
+que cumplan con las normas de la residencia. 
+Entrevistador: ¿Tiene restricciones de presupuesto o tiempo? 
+Sr. Jorge: Ninguna limitación en ese sentido. Lo importante es que el sistema funcione bien. 
+ 
+1.2 Administradora — Llorguith Satalaya T. 
+Entrevistador: Buenos días, señora Llorguith. ¿Puede describirme cómo funciona la gestión de alquiler desde la 
+consulta hasta la entrega de la habitación? 
+Sra. Llorguith: Yo me encargo de administrar los pagos de los cuartos, actualizar los contratos, mostrar los 
+cuartos disponibles y dar la bienvenida al residente cuando llega. 
+Entrevistador: ¿Qué problemas le genera seguir con este proceso manual? 
+Sra. Llorguith: Tener que verificar los pagos, si es en físico o por Yape, ya que los residentes suelen entregar 
+por partes. También tengo que avisar a los residentes sobre el vencimiento del contrato y muchas veces están 
+ocupados, lo que hace que se aplace la firma. 
+Entrevistador: ¿Qué funciones le gustaría que se implementen en el sistema? 
+Sra. Llorguith: Me gustaría que se implementara un aviso automático de fechas de pagos, vencimiento de 
+contrato y programación de mantenimiento de los cuartos. 
+ 
+1.3 Estudiantes / Residentes — Grupo (2 participantes) 
+Entrevistador: ¿Cuál fue su razón de elegir la Residencia A&J? 
+Estudiante 1: Elegí esta residencia por la seguridad que brinda: tiene cámaras en la cochera y dentro de la 
+residencia misma. 
+Entrevistador: ¿Puede describir qué dificultades tuvo? 
+Estudiante 1: El mantenimiento: si algo se rompe, empieza una fuga de agua o algo que no funciona como 
+debería, estaría bien tener una fecha específica en la que se pueda dar solución a ese tipo de situaciones. 
+Entrevistador: ¿Cuál fue su razón de elegir la Residencia A&J? 
+Estudiante 2: Elegí la residencia por la seguridad, la comodidad, la cochera y el buen ambiente que tenemos 
+entre todos los residentes. 
+Entrevistador: ¿Qué problemática enfrentó? 
+Estudiante 2: Los pagos: el día que tengo que pagar el cuarto, a veces recién me pagan en mi trabajo al día 
+siguiente y me tardo un poco. Además, los horarios del camión recolector deberían tener un aviso automático. 
+  
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 4 
+SECCIÓN 2 — PROCESO AS-IS (Diagrama de Actividades UML) 
+A continuación se describe el proceso actual de gestión de alquileres (AS -IS) mediante texto estructurado 
+equivalente al Diagrama de Actividades UML con swim lanes. Los carriles son: Estudiante, Administradora, Gerente 
+y Sistema (Cuaderno/Excel/WhatsApp). 
+ 
+2.1 Descripción del Proceso AS-IS 
+Swim Lane: Estudiante 
+• El estudiante interesado contacta a la residencia de forma presencial o por WhatsApp para consultar 
+disponibilidad. 
+• Visita la habitación disponible y decide si alquila. 
+• Firma el contrato de forma presencial con la administradora. 
+• Realiza pagos mensuales en efectivo o por Yape, a veces de forma parcial. 
+• Si tiene un problema de mantenimiento, lo reporta verbalmente a la administradora. 
+• No cuenta con un canal formal para consultar su saldo pendiente o historial de pagos. 
+ 
+Swim Lane: Administradora 
+• Atiende la consulta del estudiante y muestra las habitaciones disponibles. 
+• Elabora el contrato de forma manual y lo firma con el estudiante. 
+• Registra el pago en Excel o cuaderno (efectivo o Yape), incluyendo pagos parciales. 
+• DECISIÓN: ¿El pago es parcial? Si Sí → registra el saldo pendiente manualmente. Si No → cierra el 
+pago del mes. 
+• Envía avisos de vencimiento de contrato y fechas de pago por WhatsApp de forma manual. 
+• DECISIÓN: ¿El residente está disponible para firmar la renovación? Si No → aplaza hasta que se 
+acerque. 
+• Gestiona los reportes de mantenimiento de manera informal, sin programación definida. 
+ 
+Swim Lane: Gerente 
+• Supervisa el estado general de la residencia mediante comunicación directa con la administradora. 
+• Revisa los ingresos en Excel de forma semanal. 
+• Toma decisiones sobre expansión y mejoras de la residencia. 
+• No cuenta con un tablero en tiempo real ni con reportes automáticos. 
+ 
+Swim Lane: Sistema (Cuaderno / Excel / WhatsApp) 
+• El cuaderno y Excel actúan como únicos registros: sin alertas automáticas, sin estados en tiempo real, 
+sin historial de cambios trazables. 
+• WhatsApp es el canal informal de comunicación, sin estructura ni formato estandarizado. 
+• No existe integración entre el registro de pagos, el control de contratos y la comunicación con residentes. 
+• No hay ningún mecanismo de recordatorio automático ni seguimiento de mantenimiento. 
+ 
+Problemas críticos identificados en el AS-IS 
+• Pagos fragmentados sin saldo pendiente automático → morosi­dad no controlada. 
+• Avisos de vencimiento de contrato completamente manuales (WhatsApp) → atrasos en firma y renovación. 
+• Cero visibilidad del gerente sobre ingresos en tiempo real. 
+• Mantenimiento sin programación → residentes reportan fallas sin canal formal. 
+• Sin recordatorios automáticos de horarios del camión recolector. 
+ 
+2.2 Modelo de Negocio AS-IS — Roles y Responsabilidades 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 5 
+Rol Responsabilidades principales Herramientas actuales 
+Gerente Supervisión general, revisión de ingresos, 
+decisiones estratégicas de expansión 
+Comunicación directa, Excel 
+semanal 
+Administradora Gestionar pagos, contratos, mostrar cuartos, 
+avisar vencimientos, dar bienvenida al residente 
+Cuaderno, Excel, WhatsApp, 
+Yape 
+Estudiantes Pagar alquiler, reportar fallas, renovar contrato, 
+cumplir normas, recibir avisos 
+Efectivo, Yape, WhatsApp, 
+comunicación verbal 
+  
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 6 
+SECCIÓN 3 — ANÁLISIS DE STAKEHOLDERS Y MATRICES 
+ 
+3.1 Stakeholders Identificados 
+Sigla Stakeholder Rol en el proyecto Posición Prioridad 
+GR Jorge A. T. Chavez — 
+Gerente 
+Patrocinador ejecutivo / 
+Toma de decisiones 
+Interno — 
+Estratégico Alta 
+AD Llorguith Satalaya T. — 
+Administradora 
+Usuario operativo clave / 
+Validadora Interno — Táctico Alta 
+ES Estudiantes / Residentes Usuarios finales / 
+Beneficiarios Externo Alta 
+ 
+3.2 Matriz Poder / Influencia 
+Esta matriz determina la estrategia de comunicación y gestión para cada stakeholder. El eje vertical representa el 
+nivel de poder (autoridad para tomar decisiones o bloquear el proyecto); el eje horizontal representa la capacidad 
+de influir en otros actores. 
+ 
+Cuadrante Influencia Alta Influencia Baja 
+Poder Alto GESTIONAR DE CERCA 
+GR — Gerente  → Revisar en cada hito — 
+Poder Bajo 
+MANTENER INFORMADO 
+AD — Administradora  → Involucrar en cada 
+sprint 
+MONITOREAR 
+ES — Estudiantes  → Validar experiencia 
+de usuario 
+ 
+3.3 Matriz Poder / Interés 
+El eje vertical representa poder (autoridad formal) y el eje horizontal representa el interés en el resultado del 
+proyecto. Esta matriz guía cuánta atención dedicarle a cada stakeholder. 
+ 
+Cuadrante Interés Alto Interés Bajo 
+Poder Alto 
+ACTORES CLAVE 
+GR — Gerente (interés máximo: crecimiento 
+y eficiencia) 
+— 
+Poder Bajo 
+MANTENER INFORMADO 
+AD — Administradora (interés alto: reducir 
+carga operativa) 
+ES — Estudiantes (interés alto: saldo, 
+mantenimiento y avisos) 
+No se identificaron stakeholders en este 
+cuadrante. 
+ 
+3.4 Matriz Influencia / Impacto 
+El eje vertical representa la influencia que el stakeholder ejerce sobre otros; el eje horizontal, el impacto que el 
+proyecto tiene sobre él. 
+ 
+Cuadrante Impacto Alto en el Stakeholder Impacto Bajo en el Stakeholder 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 7 
+Influencia Alta 
+CHAMPIONS 
+GR — El éxito del sistema lo afecta 
+directamente e impulsa la adopción. 
+AD — Principal beneficiada; su aprobación 
+contagia al equipo. 
+— 
+Influencia Baja 
+RESISTORES POTENCIALES 
+ES — Alto impacto en su vida diaria. Sin 
+onboarding adecuado pueden resistir el 
+cambio. 
+No se identificaron stakeholders en este 
+cuadrante. 
+  
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 8 
+SECCIÓN 4 — REQUERIMIENTOS POR STAKEHOLDER 
+Los siguientes requerimientos han sido redactados cumpliendo los 7 criterios de calidad IEEE 830: Completos, 
+Correctos, Claros, Factibles, Necesarios, Priorizables y Verificables. Cada requerimiento es exclusivo de su 
+stakeholder: no existe duplicación entre secciones. 
+ 
+4.1 Gerente (GR) — Jorge A. T. Chavez 
+ID Tipo Descripción del Requerimiento 
+RF-01 Funcional 
+Dashboard de ingresos y ocupación: El sistema debe mostrar al Gerente un panel 
+con: número de habitaciones ocupadas, disponibles y en mantenimiento; ingresos del 
+mes en curso; contratos próximos a vencer (en los siguientes 30 días); y listado de 
+estudiantes con saldo pendiente. El panel debe actualizarse automáticamente al 
+iniciar sesión. 
+RF-02 Funcional 
+Reportes exportables: El sistema debe generar reportes en PDF, filtrados por mes, 
+habitación o estudiante. Deben incluir: total de ingresos, tasa de ocupación, contratos 
+activos y vencidos, y pagos pendientes con detalle de saldo. 
+RF-03 Funcional 
+Gestión de accesos por rol: El sistema debe permitir configurar dos niveles de acceso 
+— Gerente (acceso total: reportes, configuración, usuarios) y Administradora (registro 
+operativo: habitaciones, contratos, pagos, alertas) — de modo que cada usuario solo 
+vea y edite las funciones de su nivel. 
+RNF-
+01 
+No 
+funcional 
+Seguridad de acceso: El sistema debe requerir autenticación con usuario y 
+contraseña cifrada. Ninguna cuenta puede acceder a funciones fuera de su nivel de 
+permiso asignado. Las sesiones inactivas por más de 30 minutos deben cerrarse 
+automáticamente. 
+RNF-
+02 
+No 
+funcional 
+Respaldo automático: El sistema debe realizar respaldo automático diario de toda la 
+información (habitaciones, contratos, pagos, estudiantes) a fin de evitar pérdida de 
+datos ante fallos técnicos. 
+ 
+4.2 Administradora (AD) — Llorguith Satalaya T. 
+ID Tipo Descripción del Requerimiento 
+RF-04 Funcional 
+Registrar y gestionar habitaciones: El sistema debe permitir registrar habitaciones con 
+número, tipo, precio mensual, piso y tipo de baño (compartido/privado), así como 
+cambiar su estado entre Disponible, Ocupado y En mantenimiento. 
+RF-05 Funcional 
+Registrar estudiantes: El sistema debe permitir registrar estudiantes con DNI, nombre 
+completo, teléfono, correo electrónico y universidad de procedencia, y modificar sus 
+datos cuando sea necesario. 
+RF-06 Funcional 
+Registrar alquiler y validar disponibilidad: El sistema debe permitir asignar un 
+estudiante a una habitación disponible, registrando fechas de inicio y fin del contrato. 
+Antes de guardar, debe verificar automáticamente que la habitación no tenga un 
+contrato activo; si ya está ocupada, debe mostrar el mensaje ‘Habitación no 
+disponible’ e impedir el registro. Al confirmar, el estado de la habitación cambia 
+automáticamente a Ocupado. 
+RF-07 Funcional 
+Registrar pagos y calcular saldo pendiente: El sistema debe permitir registrar pagos 
+indicando monto, fecha y método (Yape/efectivo). Debe soportar pagos parciales y 
+calcular automáticamente el saldo pendiente del mes, mostrándolo de forma visible en 
+el perfil del estudiante. Al completar el pago total, el mes debe marcarse como 
+Pagado completo. 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 9 
+RF-08 Funcional 
+Historial de pagos: El sistema debe mostrar el historial completo de pagos por 
+estudiante, incluyendo pagos parciales, fechas y método de pago, accesible desde el 
+perfil del estudiante. 
+RF-09 Funcional 
+Alertas automáticas: El sistema debe generar alertas automáticas en los siguientes 
+eventos: (a) 7 días antes del vencimiento de un contrato, notificando a la 
+Administradora y al estudiante; (b) en la fecha de pago mensual de cada estudiante 
+con saldo pendiente; (c) al programar mantenimiento de una habitación, con fecha y 
+descripción de la tarea. Las alertas deben aparecer en el panel del sistema y, si está 
+configurado, enviarse por WhatsApp o correo. 
+RF-10 Funcional 
+Gestión de mantenimiento: El sistema debe permitir registrar solicitudes de 
+mantenimiento de habitaciones, incluyendo tipo de falla, fecha de reporte y estado 
+(Pendiente / En proceso / Resuelto), y notificar al estudiante cuando el mantenimiento 
+sea programado o resuelto. 
+RNF-
+03 
+No 
+funcional 
+Usabilidad: La interfaz debe ser simple y operable en tablet o PC sin capacitación 
+técnica avanzada. Una Administradora sin experiencia previa con el sistema debe 
+poder registrar un pago completo en menos de 3 minutos, medido en prueba con 3 
+usuarios nuevos. 
+RNF-
+04 
+No 
+funcional 
+Disponibilidad: El sistema debe estar operativo durante el horario de atención de la 
+residencia (8:00 a.m. a 8:00 p.m., todos los días), con una disponibilidad mínima del 
+99% en ese horario. 
+ 
+4.3 Estudiantes / Residentes (ES) 
+ID Tipo Descripción del Requerimiento 
+RF-11 Funcional 
+Consulta de disponibilidad de habitaciones: El sistema debe mostrar a los estudiantes 
+interesados las habitaciones disponibles con su tipo, precio mensual y características 
+(piso, tipo de baño), actualizadas en tiempo real, sin necesidad de consultar 
+presencialmente a la Administradora. 
+RF-12 Funcional 
+Consulta de saldo e historial de pagos: El estudiante debe poder consultar, desde la 
+plataforma, su saldo pendiente del mes actual y el historial de todos sus pagos 
+anteriores, con fecha, monto y método de cada abono. 
+RF-13 Funcional 
+Notificaciones al estudiante: El estudiante debe recibir notificaciones automáticas en 
+los siguientes eventos: (a) recordatorio de fecha de pago mensual con el monto 
+pendiente; (b) aviso 7 días antes del vencimiento de su contrato; (c) confirmación 
+cuando su pago sea registrado por la Administradora; (d) notificación cuando se 
+programe o resuelva un mantenimiento en su habitación. 
+RF-14 Funcional 
+Reporte de incidencia / mantenimiento: El estudiante debe poder reportar una falla o 
+necesidad de mantenimiento en su habitación desde la plataforma, describiendo el 
+tipo de problema y adjuntando opcionalmente una foto. El reporte debe quedar 
+registrado con la fecha y notificar a la Administradora de inmediato. 
+RNF-
+05 
+No 
+funcional 
+Acceso web desde móvil: La plataforma del estudiante debe ser accesible desde 
+navegador móvil (Chrome/Safari en Android e iOS), cargando en menos de 4 
+segundos en conexión 4G, sin necesidad de instalar una aplicación nativa en la 
+versión 1. 
+ 
+SECCIÓN 5 — PRIORIZACIÓN MoSCoW + VALOR / IMPACTO 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 10 
+Se combinan dos ejes de priorización: la clasificación MoSCoW (Must / Should / Could / Won’t) y la evaluación de 
+Valor entregado (1–5) vs. Impacto de no tenerlo (1 –5). El orden final refleja ambas dimensiones y la justificación 
+explica el razonamiento. Los IDs corresponden exactamente a los requerimientos definidos en la Sección 4. 
+ 
+5.1 MUST HAVE — Imprescindibles para el MVP 
+Sin estos requerimientos el sistema no aporta valor mínimo viable. Deben implementarse en el Sprint 1–2. 
+# ID Requerimiento Valor 
+(1-5) 
+Impacto 
+sin él Justificación de prioridad 
+#1 RF-06 Registrar alquiler y validar 
+disponibilidad 5/5 Crítico 
+Núcleo del negocio. Sin registrar 
+alquileres con validación 
+automática, el sistema no 
+reemplaza el cuaderno actual. 
+#2 RF-07 Registrar pagos y calcular saldo 
+pendiente 5/5 Crítico 
+Resuelve el problema principal 
+de pagos fraccionados sin saldo 
+visible. Sin esto persiste el caos 
+de pagos parciales. 
+#3 RF-09 Alertas automáticas (vencimiento, 
+pago, mantenimiento) 5/5 Alto 
+Elimina los avisos manuales de 
+la administradora por 
+WhatsApp. Es el beneficio más 
+demandado por los tres 
+stakeholders. 
+#4 RF-04 Registrar y gestionar habitaciones 4/5 Alto 
+Base de datos mínima para que 
+funcionen los alquileres. Sin 
+habitaciones registradas no hay 
+disponibilidad ni asignación 
+posible. 
+#5 RF-05 Registrar estudiantes 4/5 Alto 
+Sin ficha del estudiante no se 
+puede vincular el contrato ni el 
+historial de pagos. Requisito 
+previo a RF-06 y RF-07. 
+ 
+5.2 SHOULD HAVE — Importantes para Sprint 2–3 
+No bloquean el lanzamiento pero sin ellos la propuesta de valor es incompleta. 
+# ID Requerimiento Valor 
+(1-5) 
+Impacto 
+sin él Justificación de prioridad 
+#6 RF-11 Consulta de disponibilidad (portal 
+estudiante) 4/5 Alto 
+El estudiante deja de consultar 
+presencialmente. Reduce carga 
+de atención de la 
+administradora e impulsa 
+captación digital. 
+#7 RF-10 Gestión de mantenimiento 4/5 Medio 
+Responde a la queja recurrente 
+de estudiantes por fallas sin 
+canal formal. Sin esto el reporte 
+sigue siendo verbal e informal. 
+#8 RF-08 Historial de pagos 3/5 Medio 
+Transparencia para estudiante y 
+administradora. Sin historial no 
+hay trazabilidad de abonos 
+parciales anteriores. 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 11 
+#9 RF-01 Dashboard de ingresos y ocupación 
+(Gerente) 4/5 Alto 
+El Gerente deja de depender del 
+Excel semanal para ver el 
+estado del negocio. KPI 
+estratégico de supervisión. 
+#10 RNF-
+04 
+Disponibilidad 99% en horario de 
+atención 3/5 Medio 
+La residencia opera 8 a.m.–8 
+p.m. Una caída en ese horario 
+bloquea el registro de pagos y 
+contratos. 
+ 
+5.3 COULD HAVE — Deseables para Sprint 3–4 
+Mejoran la propuesta de valor pero el sistema es funcional sin ellos. Entran si hay tiempo y presupuesto. 
+# ID Requerimiento Valor 
+(1-5) 
+Impacto 
+sin él Justificación de prioridad 
+#11 RF-12 Consulta de saldo e historial (portal 
+estudiante) 3/5 Bajo 
+Aumenta la transparencia con el 
+residente, pero en v1 la 
+administradora puede informar 
+el saldo directamente. 
+#12 RF-13 
+Notificaciones al estudiante 
+(recordatorio pago, contrato, 
+mantenimiento) 
+3/5 Bajo–
+Medio 
+Complementa RF-09 del lado 
+del estudiante. En v1 las alertas 
+llegan a la administradora; las 
+del estudiante entran en v2. 
+#13 RF-14 
+Reporte de 
+incidencia/mantenimiento (desde 
+portal estudiante) 
+3/5 Bajo 
+El canal de reporte digital 
+mejora la experiencia, pero en 
+v1 puede reportarse 
+verbalmente o por WhatsApp. 
+#14 RF-02 Reportes exportables en PDF 
+(Gerente) 2/5 Bajo 
+En v1 el Gerente puede revisar 
+datos en pantalla (RF-01). La 
+exportación en PDF es una 
+mejora para v2. 
+#15 RF-03 Gestión de accesos por rol 
+(Gerente/Administradora) 2/5 Bajo 
+Con pocos usuarios en v1, el 
+control de roles puede 
+gestionarse con una sola cuenta 
+administradora. 
+ 
+5.4 WON’T HAVE (v1) — Fuera del alcance 
+Candidatos para versión 2. No entran por restricciones de tiempo o dependencias no resueltas en v1. 
+# ID Requerimiento Valor 
+(1-5) 
+Impacto 
+sin él Justificación de prioridad 
+#16 RNF-
+05 App móvil nativa para estudiantes 2/5 Nulo en 
+v1 
+En v1 se inicia con portal web 
+responsive. La app nativa 
+requiere desarrollo adicional y 
+se planifica para v2. 
+#17 — Integración con pasarelas de pago 
+online (Yape API, tarjeta) 2/5 Nulo en 
+v1 
+Los pagos se registran 
+manualmente (Yape confirma 
+por pantalla). La integración 
+automática va en v2. 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 12 
+#18 RNF-
+01 
+Seguridad avanzada: cifrado AES-
+256 + autenticación de dos factores 2/5 Bajo 
+En v1 es suficiente con 
+autenticación básica con 
+contraseña. El cifrado avanzado 
+y 2FA se incorporan en v2. 
+ 
+  
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 13 
+SECCIÓN 6 — CRITERIOS DE ACEPTACIÓN Y DEFINICIÓN DE HECHO 
+Los criterios de aceptación siguen el marco Dado — Cuando — Entonces (BDD: Behavior Driven Development), 
+que permite que tanto el equipo técnico como los stakeholders de negocio puedan verificar de manera objetiva si 
+cada requerimiento ha sido implementado correctamente. 
+Dado: describe el estado inicial / contexto del escenario.   Cuando: especifica la acción que desencadena el 
+comportamiento.   Entonces: define el resultado esperado y verificable. 
+ 
+RF-06 — Registrar alquiler y validar disponibilidad 
+Must Have   Orden de Prioridad: #1 
+Escenario 1: 
+Dado un estudiante interesado ha consultado las habitaciones disponibles en la página web de la residencia, 
+ha elegido una habitación y se ha acercado presencialmente para concretar el alquiler, 
+Cuando la Administradora registra al estudiante en el sistema, selecciona la habitación con estado 
+Disponible, ingresa las fechas de inicio y fin del contrato, y confirma el registro tras formalizar el contrato y 
+recibir el pago del mes, 
+Entonces el sistema debe cambiar automáticamente el estado de la habitación a Ocupado, registrar el 
+contrato activo en el perfil del estudiante, registrar el pago inicial del mes y mostrar el mensaje de 
+confirmación en menos de 5 segundos. 
+Escenario 2: 
+Dado la habitación seleccionada ya tiene un contrato activo con otro estudiante, 
+Cuando la Administradora intenta registrar un nuevo alquiler sobre esa misma habitación, 
+Entonces el sistema debe mostrar el mensaje ‘Habitación no disponible: ya cuenta con un contrato activo’ e 
+impedir que el registro continúe, sin modificar ningún dato existente. 
+Escenario 3: 
+Dado la Administradora ingresa una fecha de fin de contrato anterior a la fecha de inicio, 
+Cuando intenta guardar el registro, 
+Entonces el sistema debe mostrar el error ‘La fecha de fin no puede ser anterior a la fecha de inicio’ y no 
+registrar el alquiler hasta que las fechas sean corregidas. 
+Definición de Hecho (DoD): 
+✓ Validación de disponibilidad evita doble reserva, probada con 10 intentos de registro simultáneo. 
+✓ El estado de la habitación cambia a Ocupado automáticamente y es visible en el catálogo en tiempo real. 
+✓ El registro se completa en menos de 5 segundos, medido en 20 pruebas de extremo a extremo. 
+✓ Queda trazabilidad del usuario que registró el alquiler, la fecha y hora del registro. 
+✓ La validación de fechas (inicio anterior a fin) probada con 5 casos de fechas incorrectas. 
+✓ El contrato activo aparece en el historial del estudiante inmediatamente tras el registro. 
+ 
+RF-07 — Registrar pagos y calcular saldo pendiente 
+Must Have   Orden de Prioridad: #2 
+Escenario 1: 
+Dado un estudiante tiene un alquiler mensual de S/ 400 y la Administradora registra un pago parcial de S/ 
+150, 
+Cuando confirma el registro del pago con método Yape y la fecha actual, 
+Entonces el sistema debe calcular automáticamente el saldo pendiente de S/ 250, actualizar el historial de 
+pagos del estudiante y mostrar el estado del mes como Pago parcial — Pendiente S/ 250. 
+Escenario 2: 
+Dado el estudiante ya tiene registrado un pago parcial de S/ 150 y abona los S/ 250 restantes, 
+Cuando la Administradora registra el segundo pago, 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 14 
+Entonces el sistema debe actualizar el saldo pendiente a S/ 0, marcar el mes como Pagado completo y 
+mostrar ambos abonos en el historial con sus fechas y métodos. 
+Escenario 3: 
+Dado la Administradora intenta registrar un pago con monto mayor al saldo pendiente del estudiante, 
+Cuando ingresa el monto y confirma, 
+Entonces el sistema debe mostrar el aviso ‘El monto ingresado supera el saldo pendiente. ¿Desea 
+continuar?’ y solicitar confirmación antes de guardar, permitiendo corregir el monto. 
+Definición de Hecho (DoD): 
+✓ Cálculo automático del saldo pendiente verificado con 10 combinaciones de pagos parciales distintos. 
+✓ El estado Pagado completo se activa automáticamente al cubrir el monto total mensual. 
+✓ Cada pago registra: monto, fecha, método (Yape/efectivo) y usuario que realizó el registro. 
+✓ El historial de pagos refleja en tiempo real cada abono sin necesidad de recargar la página. 
+✓ La alerta de monto excedido probada con 5 casos límite. 
+✓ Los pagos son visibles tanto para la Administradora como para el estudiante en su perfil. 
+ 
+RF-09 — Alertas automáticas 
+Must Have   Orden de Prioridad: #5 
+Escenario 1: 
+Dado un contrato de alquiler tiene fecha de vencimiento en 7 días, 
+Cuando el sistema ejecuta su proceso diario de verificación de fechas, 
+Entonces el sistema debe enviar automáticamente una notificación a la Administradora y al estudiante 
+indicando la fecha exacta de vencimiento y solicitando la renovación, sin intervención manual. 
+Escenario 2: 
+Dado la fecha de pago mensual de un estudiante llega y tiene saldo pendiente mayor a S/ 0, 
+Cuando el sistema ejecuta su proceso diario de verificación de pagos, 
+Entonces el sistema debe generar una alerta visible en el panel de la Administradora con el nombre del 
+estudiante, la habitación y el monto pendiente, y notificar al estudiante por el canal configurado (WhatsApp o 
+correo). 
+Escenario 3: 
+Dado la Administradora programa un mantenimiento para una habitación con fecha y descripción de la tarea, 
+Cuando confirma la programación en el sistema, 
+Entonces el sistema debe notificar automáticamente al estudiante que ocupa esa habitación con la fecha y 
+el tipo de mantenimiento programado, y registrar la tarea con estado Pendiente. 
+Escenario 4: 
+Dado un contrato ya venció (fecha de fin superada) y no se ha registrado renovación, 
+Cuando el sistema verifica las fechas en su proceso diario, 
+Entonces el sistema debe escalar la alerta al Gerente con el nombre del estudiante, habitación y días 
+vencidos, y mantener el contrato visible como Vencido — Requiere acción en el panel de la Administradora. 
+Definición de Hecho (DoD): 
+✓ Alerta de vencimiento de contrato generada automáticamente con 7 días de anticipación, probada con 10 
+contratos en fechas distintas. 
+✓ Alerta de pago pendiente disparada el día exacto de vencimiento, verificada con 5 estudiantes con saldos 
+distintos. 
+✓ Notificación de mantenimiento recibida por el estudiante en menos de 1 minuto tras la programación. 
+✓ Escalación al Gerente por contrato vencido sin renovación probada con simulación de 5 contratos expirados. 
+✓ Todas las alertas quedan registradas en el log del sistema con fecha, hora y tipo de evento. 
+✓ Probado en horario de atención (8:00 a.m. – 8:00 p.m.) sin alertas fuera de rango. 
+ 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 15 
+RF-11 — Consulta de disponibilidad de habitaciones 
+Should Have   Orden de Prioridad: #6 
+Escenario 1: 
+Dado un estudiante interesado ingresa a la página web de la Residencia A&J sin necesidad de tener cuenta 
+creada, 
+Cuando navega a la sección de habitaciones disponibles, 
+Entonces el sistema debe mostrar el listado actualizado de habitaciones con estado Disponible, incluyendo 
+tipo, precio mensual, piso y tipo de baño, sin requerir inicio de sesión para esta vista. 
+Escenario 2: 
+Dado un estudiante ha revisado las habitaciones disponibles en la web y desea registrar su interés en 
+alquilar una habitación específica, 
+Cuando completa el formulario de registro con sus datos personales (nombre, DNI, teléfono, universidad) y 
+envía la solicitud, 
+Entonces el sistema debe notificar a la Administradora del interés del estudiante con sus datos de contacto, 
+para que ella coordine la visita presencial, formalice el contrato y reciba el pago correspondiente. 
+Escenario 3: 
+Dado la Administradora ha formalizado el contrato presencialmente y registra el alquiler en el sistema 
+cambiando el estado de la habitación a Ocupado, 
+Cuando cualquier estudiante externo consulta las habitaciones disponibles en la web en ese mismo 
+momento, 
+Entonces el sistema debe excluir esa habitación del listado de disponibles y reflejar el cambio en tiempo 
+real, sin necesidad de recargar manualmente la página. 
+Definición de Hecho (DoD): 
+✓ Listado de habitaciones disponibles visible sin inicio de sesión, probado en 3 navegadores (Chrome, Firefox, 
+Safari móvil). 
+✓ Formulario de registro del estudiante funcional: valida que los campos DNI, nombre, teléfono y universidad 
+no estén vacíos antes de enviar. 
+✓ La notificación de interés llega a la Administradora en menos de 60 segundos tras el envío del formulario, 
+probado con 5 registros. 
+✓ Cada habitación muestra: tipo, precio, piso y tipo de baño, correctamente cargados desde la base de datos. 
+✓ La página carga en menos de 4 segundos en conexión 4G, medido en 5 pruebas. 
+✓ Habitaciones con estado En mantenimiento o Ocupado no aparecen en el listado de disponibles. 
+✓ El estado de disponibilidad se actualiza en tiempo real tras cada registro de alquiler o cambio de estado, 
+verificado con 10 pruebas de actualización simultánea. 
+ 
+RF-10 — Gestión de mantenimiento 
+Should Have   Orden de Prioridad: #7 
+Escenario 1: 
+Dado un estudiante reporta una falla en su habitación (por ejemplo, fuga de agua) desde la plataforma, 
+describiendo el problema y adjuntando una foto, 
+Cuando confirma el envío del reporte, 
+Entonces el sistema debe registrar la solicitud con la fecha, tipo de falla, descripción y foto adjunta, cambiar 
+el estado a Pendiente y notificar de inmediato a la Administradora con todos los detalles. 
+Escenario 2: 
+Dado la Administradora recibe la notificación de mantenimiento y actualiza el estado a En proceso con la 
+fecha estimada de resolución, 
+Cuando guarda el cambio en el sistema, 
+Entonces el sistema debe notificar automáticamente al estudiante que su solicitud está siendo atendida e 
+indicar la fecha estimada, y cambiar el estado visible de la solicitud a En proceso. 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 16 
+Escenario 3: 
+Dado la Administradora resuelve el problema y marca la solicitud como Resuelto, 
+Cuando confirma el cierre en el sistema, 
+Entonces el sistema debe notificar al estudiante que el mantenimiento fue completado, registrar la fecha de 
+resolución en el historial y cambiar el estado de la habitación de En mantenimiento a Disponible u Ocupado 
+según corresponda. 
+Definición de Hecho (DoD): 
+✓ Flujo completo reporte → En proceso → Resuelto probado de extremo a extremo con 5 solicitudes. 
+✓ Notificación a la Administradora recibida en menos de 60 segundos tras el reporte del estudiante. 
+✓ Foto adjunta almacenada correctamente y accesible desde el detalle de la solicitud. 
+✓ El historial de mantenimiento registra: tipo de falla, fecha de reporte, fecha de resolución y usuario que cerró 
+la tarea. 
+✓ El estudiante recibe notificación en cada cambio de estado (Pendiente → En proceso → Resuelto). 
+✓ El estado de la habitación se actualiza automáticamente al marcar la solicitud como Resuelto. 
+ 
+RESUMEN EJECUTIVO 
+ 
+Sección Entregable Detalle 
+1 — Entrevistas 3 stakeholders clave Gerente, Administradora, 2 Estudiantes 
+2 — Proceso AS-IS Problemas cuantificados Pagos manuales, falta de alertas, 
+mantenimiento sin programación 
+3 — Stakeholders 3 matrices de análisis Poder/Influencia, Poder/Interés, 
+Influencia/Impacto 
+4 — Requerimientos Catálogo completo por stakeholder 14 RF + 4 RNF organizados por actor 
+5 — Priorización MoSCoW + Valor/Impacto 5 Must Have, 3 Should Have, 2 Could Have, 
+2 Won't Have 
+6 — Criterios Formato Dado-Cuando-Entonces 3 RF documentados con escenarios y DoD 
+7 — UML Diagrama de Clases lógico 7 clases, 6 relaciones, 6 enumeraciones 
+ 
+IMPACTO ESPERADO DEL SISTEMA AUTOMATIZADO 
+ 
+Beneficio Descripción del impacto 
+Reducción de morosidad Alertas automáticas de fechas de pago eliminan los avisos manuales y reducen 
+la morosidad. 
+Ahorro de tiempo La administradora deja de enviar mensajes masivos por WhatsApp; el sistema 
+notifica automáticamente. 
+Satisfacción del estudiante El residente puede consultar su saldo, fechas de mantenimiento y recibir avisos 
+del camión recolector. 
+Control para el Gerente Reportes de ingresos y ocupación disponibles en tiempo real, sin depender del 
+Excel semanal. 
+
+Residencia A&J — Caso de Estudio: Automatización Gestión de Alquileres Ingeniería de Requerimientos · 2026 
+Sistema de Gestión de Alquiler de Habitaciones Pág. 17 
+Gestión profesional de 
+contratos 
+El sistema alerta con 7 días de anticipación el vencimiento de cualquier 
+contrato, evitando renovaciones tardías. 
+ 

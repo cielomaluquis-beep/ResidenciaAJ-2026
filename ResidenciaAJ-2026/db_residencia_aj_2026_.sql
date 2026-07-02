@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `db_residencia_aj_2026` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `db_residencia_aj_2026`;
+CREATE DATABASE IF NOT EXISTS `db_residencia_aj_2026_` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `db_residencia_aj_2026_`;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -20,14 +20,11 @@ CREATE TABLE `roles` (
 DROP TABLE IF EXISTS `modulos`;
 CREATE TABLE `modulos` (
   `id_modulo` INT NOT NULL AUTO_INCREMENT,
-  `id_modulo_padre` INT DEFAULT NULL,
   `nombre` VARCHAR(50) NOT NULL,
   `ruta` VARCHAR(100),
   `icono` VARCHAR(50),
   `orden` INT DEFAULT 0,
-  PRIMARY KEY (`id_modulo`),
-  KEY `fk_modulo_padre` (`id_modulo_padre`),
-  CONSTRAINT `fk_modulo_padre` FOREIGN KEY (`id_modulo_padre`) REFERENCES `modulos` (`id_modulo`) ON DELETE CASCADE
+  PRIMARY KEY (`id_modulo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `permisos_rol_modulo`;
@@ -170,10 +167,56 @@ INSERT INTO `roles` (`nombre`, `descripcion`) VALUES
 ('RECEPCIONISTA', 'Personal de recepción que gestiona clientes y cobros');
 
 INSERT INTO `usuarios` (`email`, `contrasena`, `nombre`, `habilitado`, `id_rol`) VALUES 
-('admin@residencia.com', '$2a$10$XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'Administrador Principal', 1, 1);
+('admin@residencia.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Administrador Principal', 1, 1);
 
 INSERT INTO `tipo_contrato` (`nombre`, `dias_duracion`) VALUES 
 ('Quincenal', 15),
 ('Mensual', 30),
 ('Semestral', 180),
 ('Anual', 365);
+
+-- MÓDULOS DE PRUEBA
+INSERT INTO `modulos` (`nombre`, `ruta`, `icono`, `orden`) VALUES 
+('Habitaciones', '/habitaciones.html', 'fa-bed', 1),
+('Contratos', '/contratos.html', 'fa-file-signature', 2),
+('Pagos', '/pagos.html', 'fa-money-bill', 3),
+('Seguridad', '/seguridad.html', 'fa-shield-halved', 4);
+
+-- PERMISOS PARA EL ROL ADMIN (id_rol = 1)
+INSERT INTO `permisos_rol_modulo` (`ver_modulo`, `p_view`, `p_create`, `p_edit`, `p_delete`, `id_rol`, `id_modulo`) VALUES 
+(1, 1, 1, 1, 1, 1, 1),
+(1, 1, 1, 1, 1, 1, 2),
+(1, 1, 1, 1, 1, 1, 3),
+(1, 1, 1, 1, 1, 1, 4);
+
+-- --------------------------------------------------------
+-- NUEVAS TABLAS: INCIDENCIAS (MANTENIMIENTO) Y ALERTAS
+-- --------------------------------------------------------
+
+-- Tabla de Incidencias (Mantenimiento)
+CREATE TABLE `incidencias` (
+  `id_incidencia` INT NOT NULL AUTO_INCREMENT,
+  `tipo_falla` VARCHAR(50) NOT NULL,
+  `descripcion` VARCHAR(500) NOT NULL,
+  `foto` VARCHAR(255),
+  `fecha_reporte` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `fecha_resolucion` TIMESTAMP NULL,
+  `estado` VARCHAR(20) DEFAULT 'Pendiente',
+  `id_habitacion` INT NOT NULL,
+  `id_usuario` INT NOT NULL,
+  PRIMARY KEY (`id_incidencia`),
+  CONSTRAINT `fk_incid_hab` FOREIGN KEY (`id_habitacion`) REFERENCES `habitaciones` (`id_habitacion`),
+  CONSTRAINT `fk_incid_usu` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla de Alertas Automáticas
+CREATE TABLE `alertas` (
+  `id_alerta` INT NOT NULL AUTO_INCREMENT,
+  `tipo_alerta` VARCHAR(50) NOT NULL,
+  `mensaje` VARCHAR(500) NOT NULL,
+  `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `leida` CHAR(1) DEFAULT '0',
+  `id_usuario` INT NOT NULL,
+  PRIMARY KEY (`id_alerta`),
+  CONSTRAINT `fk_alerta_usu` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
