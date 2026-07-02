@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reservas - A&J Residencia</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-light">
+
+    <div class="d-flex" style="min-height: 100vh;">
+        
+        <!-- Sidebar Dinámico -->
+        <div id="sidebar-container" class="bg-dark text-white" style="width: 250px; min-height: 100vh;">
+            <div class="p-4 text-center border-bottom border-secondary">
+                <i class="fa-solid fa-building fa-3x text-primary mb-2"></i>
+                <h4 class="fw-bold mb-0">A&J Residencia</h4>
+                <small class="text-white-50">Portal del Inquilino</small>
+            </div>
+            
+            <div class="mt-4 px-3 text-center mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-2 shadow" style="width: 60px; height: 60px;">
+                    <span id="user-avatar-initial" class="fs-3 fw-bold text-white">U</span>
+                </div>
+                <h6 id="user-name-display" class="fw-bold mb-0 text-truncate">Cargando...</h6>
+                <small id="user-role-display" class="text-white-50">Rol</small>
+            </div>
+
+            <nav class="nav flex-column flex-grow-1 p-3">
+                <a href="dashboard.html" id="nav-dashboard" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                <a href="catalogo.html" id="nav-catalogo" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-images me-3"></i>Catálogo</a>
+                <a href="habitaciones.html" id="nav-habitaciones" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                <a href="clientes.html" id="nav-clientes" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                <a href="reservas.html" id="nav-reservas" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                <a href="mis_reservas.html" id="nav-mis_reservas" class="nav-link text-white active rounded shadow-sm mb-2" style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-calendar-check me-3"></i>Mis Reservas</a>
+                <a href="contratos.html" id="nav-contratos" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                <a href="pagos.html" id="nav-pagos" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                <a href="notificaciones.html" id="nav-notificaciones" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                <a href="seguridad.html" id="nav-seguridad" class="nav-link text-white-50 mb-2 hover-nav"><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                
+                <div class="mt-auto pt-4 pb-2 text-center">
+                    <button onclick="window.location.href='AuthController?action=Salir'" class="btn btn-outline-light btn-sm px-4 rounded-pill">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i>Salir
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-grow-1 d-flex flex-column" style="width: calc(100% - 250px);">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3 shadow-sm">
+                <div class="d-flex align-items-center">
+                    <h2 class="fw-bold mb-0 text-dark">Mis Reservas</h2>
+                </div>
+            </nav>
+
+            <!-- Main Container -->
+            <div class="p-4 flex-grow-1 overflow-auto">
+                <div class="row mb-4">
+                    <div class="col-12 d-flex justify-content-end align-items-center">
+                        <a href="catalogo.html" class="btn btn-primary rounded-pill px-4 shadow-sm"><i class="fa-solid fa-plus me-2"></i>Nueva Reserva</a>
+                    </div>
+                </div>
+
+                <div class="row" id="reservasList">
+                    <!-- Cargado por JS -->
+                    <div class="col-12 text-center py-5">
+                        <i class="fa-solid fa-spinner fa-spin fs-1 text-muted"></i>
+                        <p class="text-muted mt-3">Cargando tus reservas...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="bg-white border-top py-3 mt-auto text-center text-muted">
+                <small>&copy; 2026 Residencia A&J. Todos los derechos reservados.</small>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Reportar Falla -->
+    <div class="modal fade" id="modalReportarFalla" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold mb-0 text-dark">Reportar Falla o Avería</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formReporte">
+                    <input type="hidden" name="id_habitacion" id="id_habitacion_input">
+                    <div class="modal-body pt-3">
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Tipo de Falla</label>
+                            <select class="form-select bg-light border-0" name="tipoFalla" required>
+                                <option value="Agua / Gasfitería">Agua / Gasfitería</option>
+                                <option value="Electricidad">Electricidad</option>
+                                <option value="Infraestructura">Infraestructura (Puertas, Ventanas, etc.)</option>
+                                <option value="Mobiliario">Mobiliario</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Descripción detallada</label>
+                            <textarea class="form-control bg-light border-0" name="descripcion" rows="3" placeholder="Describe el problema..." required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Adjuntar Foto (Opcional)</label>
+                            <input type="file" class="form-control bg-light border-0" name="foto" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Enviar Reporte</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarReservas();
+        });
+
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(response => {
+                    if (!response.ok) throw new Error("No autenticado");
+                    return response.json();
+                })
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    const permisos = data.permisos || {};
+                    
+                    const roleName = usuario.rol ? usuario.rol.nombre : 'Usuario';
+                    const displayRole = roleName.charAt(0).toUpperCase() + roleName.slice(1).toLowerCase();
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = displayRole;
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+
+                    // Aplicar permisos al sidebar
+                    const modulos = ['dashboard', 'habitaciones', 'clientes', 'reservas', 'contratos', 'pagos', 'notificaciones', 'seguridad', 'catalogo', 'mis_reservas'];
+                    modulos.forEach(mod => {
+                        const navItem = document.getElementById('nav-' + mod);
+                        if (navItem) {
+                            const ruta = '/' + mod + '.html';
+                            const tienePermiso = usuario.id_rol === 1 || (permisos[ruta] && permisos[ruta].verModulo) 
+                                                || (usuario.id_rol === 3 && (mod === 'catalogo' || mod === 'mis_reservas' ));
+                            if (!tienePermiso) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar usuario:", error);
+                    window.location.href = "login.html"; // Redirigir si no está logueado
+                });
+        }
+
+        function cargarReservas() {
+            fetch('ReservaController?action=mis_reservas')
+                .then(res => res.json())
+                .then(data => {
+                    const list = document.getElementById('reservasList');
+                    list.innerHTML = '';
+                    
+                    if (data.length === 0) {
+                        list.innerHTML = `
+                            <div class="col-12 text-center py-5">
+                                <div class="icon-circle mx-auto mb-3 text-muted" style="background:#e9ecef; width:80px; height:80px; font-size:35px;"><i class="fa-solid fa-calendar-xmark"></i></div>
+                                <h5>No tienes reservas activas</h5>
+                                <p class="text-muted">Explora nuestras habitaciones y reserva tu nuevo hogar.</p>
+                                <a href="catalogo.html" class="btn btn-outline-primary rounded-pill mt-2">Ver Catálogo</a>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    data.forEach(r => {
+                        let estadoBadge = '';
+                        if (r.estado === '1') estadoBadge = '<span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Pendiente</span>';
+                        else if (r.estado === '2') estadoBadge = '<span class="badge bg-success px-3 py-2 rounded-pill">Confirmada</span>';
+                        else if (r.estado === '0') estadoBadge = '<span class="badge bg-danger px-3 py-2 rounded-pill">Rechazada</span>';
+                        
+                        const card = `
+                        <div class="col-md-6 mb-4">
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-muted small fw-bold">ID Reserva: #${r.id_reserva}</span>
+                                        ${estadoBadge}
+                                    </div>
+                                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-bed text-primary me-2"></i> Habitación ID ${r.id_habitacion}</h5>
+                                    
+                                    <div class="bg-light p-3 rounded-3 mb-3">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <small class="text-muted d-block mb-1">FECHA RESERVA</small>
+                                                <span class="fw-semibold">${r.fecha_reserva}</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block mb-1">INGRESO (Posible)</small>
+                                                <span class="fw-semibold">${r.fecha_posibleIni}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    ${r.estado === '2' ? `
+                                        <div class="alert alert-success border-0 py-2 mb-3 small"><i class="fa-solid fa-check-circle me-2"></i>Tu reserva está confirmada.</div>
+                                        <button class="btn btn-outline-danger btn-sm w-100 rounded-pill" onclick="abrirModalReporte(${r.id_habitacion})"><i class="fa-solid fa-wrench me-2"></i>Reportar Falla</button>
+                                    ` : ''}
+                                    ${r.estado === '0' ? '<div class="alert alert-danger border-0 py-2 mb-0 small"><i class="fa-solid fa-times-circle me-2"></i>Tu reserva fue rechazada. Contacta a soporte.</div>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                        list.innerHTML += card;
+                    });
+                })
+                .catch(e => {
+                    console.error(e);
+                    document.getElementById('reservasList').innerHTML = '<div class="col-12 text-center text-danger">Error al cargar reservas.</div>';
+                });
+        }
+
+        function cerrarSesion() {
+            window.location.href = 'AuthController?action=Salir';
+        }
+        function abrirModalReporte(idHabitacion) {
+            document.getElementById('formReporte').reset();
+            document.getElementById('id_habitacion_input').value = idHabitacion;
+            const modal = new bootstrap.Modal(document.getElementById('modalReportarFalla'));
+            modal.show();
+        }
+
+        document.getElementById('formReporte').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            formData.append('action', 'reportar');
+            
+            Swal.fire({ title: 'Enviando reporte...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
+            fetch('IncidenciaController', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    Swal.fire('Enviado', data.message, 'success');
+                    bootstrap.Modal.getInstance(document.getElementById('modalReportarFalla')).hide();
+                } else {
+                    Swal.fire('Error', data.message, 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
