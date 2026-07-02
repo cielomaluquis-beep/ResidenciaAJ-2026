@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contratos - Residencia A&J</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-dashboard" ><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-habitaciones" ><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-clientes" ><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-reservas" ><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white active rounded shadow-sm mb-2" id="nav-contratos"  style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-pagos" ><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="notificaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-notificaciones" ><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-seguridad" ><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-4 p-lg-5">
+                
+                <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Contratos</h2>
+                        <p class="text-muted mb-0">Gestión de alquileres y vencimientos</p>
+                    </div>
+                    <button class="btn rounded-pill px-4 py-2 shadow-sm fw-bold text-white" style="background-color: #4a6cf7;" data-bs-toggle="modal" data-bs-target="#modalContrato">
+                        <i class="fa-solid fa-plus me-2"></i> Nuevo Contrato
+                    </button>
+                </div>
+
+                <!-- Tabla de Contratos -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table id="table-contratos" class="table table-hover align-middle mb-0 w-100">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="px-4 py-3 text-muted fw-semibold border-0">Nro.</th>
+                                        <th class="py-3 text-muted fw-semibold border-0">Cliente</th>
+                                        <th class="py-3 text-muted fw-semibold border-0">Hab.</th>
+                                        <th class="py-3 text-muted fw-semibold border-0">Tipo</th>
+                                        <th class="py-3 text-muted fw-semibold border-0">F. Inicio</th>
+                                        <th class="py-3 text-muted fw-semibold border-0">F. Fin</th>
+                                        <th class="py-3 text-muted fw-semibold border-0">Estado</th>
+                                        <th class="py-3 text-muted fw-semibold border-0 text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="contratos-tbody">
+                                    <!-- Contenido dinámico -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal for Nuevo/Editar Contrato -->
+    <div class="modal fade" id="modalContrato" tabindex="-1" aria-labelledby="modalContratoLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalContratoLabel">Registrar Nuevo Contrato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="formContrato">
+                        <input type="hidden" id="id_contrato" name="id_contrato">
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="id_cliente" class="form-label text-muted fw-semibold">Cliente (Inquilino)</label>
+                                <select id="id_cliente" name="id_cliente" class="form-select" required>
+                                    <option value="">Seleccione un cliente...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="id_habitacion" class="form-label text-muted fw-semibold">Habitación</label>
+                                <select id="id_habitacion" name="id_habitacion" class="form-select" required>
+                                    <option value="">Seleccione una habitación...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label for="id_tipoContrato" class="form-label text-muted fw-semibold">Tipo de Contrato</label>
+                                <select id="id_tipoContrato" name="id_tipoContrato" class="form-select" onchange="calcularFechaFin()" required>
+                                    <option value="">Seleccione...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fecha_inicio" class="form-label text-muted fw-semibold">Fecha Inicio</label>
+                                <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" onchange="calcularFechaFin()" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fecha_fin" class="form-label text-muted fw-semibold">Fecha Fin (Vencimiento)</label>
+                                <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info rounded-3 mb-0 border-0" role="alert">
+                            <i class="fa-solid fa-circle-info me-2"></i> La habitación seleccionada pasará a estado "Ocupado".
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnGuardarContrato" class="btn btn-primary rounded-pill px-4 shadow-sm" onclick="guardarContrato()">Guardar Contrato</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery and DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Array global para guardar las duraciones de los tipos de contrato
+        let tiposContratoGlobal = [];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarListas();
+            cargarContratos();
+        });
+
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(response => {
+                    if (!response.ok) throw new Error("No autenticado");
+                    return response.json();
+                })
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    const permisos = data.permisos || {};
+                    
+                    const roleName = usuario.rol ? usuario.rol.nombre : 'Usuario';
+                    const displayRole = roleName.charAt(0).toUpperCase() + roleName.slice(1).toLowerCase();
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = displayRole;
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+
+                    // Aplicar permisos al sidebar
+                    const modulos = ['dashboard', 'habitaciones', 'clientes', 'reservas', 'contratos', 'pagos', 'notificaciones', 'seguridad', 'catalogo', 'mis_reservas'];
+                    modulos.forEach(mod => {
+                        const navItem = document.getElementById('nav-' + mod);
+                        if (navItem) {
+                            const ruta = '/' + mod + '.html';
+                            const tienePermiso = usuario.id_rol === 1 || (permisos[ruta] && permisos[ruta].verModulo) 
+                                                || (usuario.id_rol === 3 && (mod === 'catalogo' || mod === 'mis_reservas' ));
+                            if (!tienePermiso) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar usuario:", error);
+                    window.location.href = "login.html"; // Redirigir si no está logueado
+                });
+        }
+
+        function cargarListas() {
+            // Tipos de Contrato
+            fetch('ContratoController?action=listarTipos')
+                .then(res => res.json())
+                .then(data => {
+                    tiposContratoGlobal = data;
+                    const select = document.getElementById('id_tipoContrato');
+                    data.forEach(t => {
+                        select.innerHTML += `<option value="${t.id_tipoContrato}" data-dias="${t.dias_duracion}">${t.nombre}</option>`;
+                    });
+                });
+
+            // Clientes
+            fetch('ContratoController?action=listarClientes')
+                .then(res => res.json())
+                .then(data => {
+                    const select = document.getElementById('id_cliente');
+                    data.forEach(c => {
+                        select.innerHTML += `<option value="${c.id_cliente}">${c.nombre} ${c.ap_paterno} (DNI: ${c.nro_documento})</option>`;
+                    });
+                });
+
+            // Habitaciones Disponibles
+            fetch('ContratoController?action=listarHabitacionesDisponibles')
+                .then(res => res.json())
+                .then(data => {
+                    const select = document.getElementById('id_habitacion');
+                    data.forEach(h => {
+                        select.innerHTML += `<option value="${h.id_habitacion}">Piso ${h.piso} - Hab. ${h.numero}</option>`;
+                    });
+                });
+        }
+
+        function cargarContratos() {
+            fetch('ContratoController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('contratos-tbody');
+                    tbody.innerHTML = '';
+                    
+                    data.forEach(c => {
+                        const badgeClass = c.estado === '1' ? 'bg-success' : 'bg-secondary';
+                        const badgeText = c.estado === '1' ? 'Activo' : 'Inactivo';
+                        
+                        let fInicio = formatearFecha(c.fecha_inicio);
+                        let fFin = formatearFecha(c.fecha_fin);
+
+                        const tr = `
+                        <tr>
+                            <td class="px-4 fw-bold text-muted">#${c.id_contrato}</td>
+                            <td class="fw-semibold text-dark">${c.clienteNombreCompleto}</td>
+                            <td><span class="badge bg-light text-dark border">Hab. ${c.habitacionNumero}</span></td>
+                            <td>${c.tipoContratoNombre}</td>
+                            <td>${fInicio}</td>
+                            <td>${fFin}</td>
+                            <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+                            <td class="text-center">
+                                ${c.estado === '1' ? `<button class="btn btn-sm btn-outline-info rounded-circle me-1" onclick='abrirVer(${JSON.stringify(c).replace(/'/g, "&#39;")})' title="Ver Detalles"><i class="fa-solid fa-eye"></i></button>
+                                <button class="btn btn-sm btn-outline-primary rounded-circle me-1" onclick='abrirEditar(${JSON.stringify(c).replace(/'/g, "&#39;")})' title="Editar"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="eliminarContrato(${c.id_contrato})" title="Finalizar/Eliminar"><i class="fa-solid fa-trash"></i></button>` : `<button class="btn btn-sm btn-outline-info rounded-circle" onclick='abrirVer(${JSON.stringify(c).replace(/'/g, "&#39;")})' title="Ver Detalles"><i class="fa-solid fa-eye"></i></button>`}
+                            </td>
+                        </tr>`;
+                        tbody.innerHTML += tr;
+                    });
+                    
+                    // Initialize DataTables
+                    if ($.fn.DataTable.isDataTable('#table-contratos')) {
+                        $('#table-contratos').DataTable().destroy();
+                    }
+                    $('#table-contratos').DataTable({
+                        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+                        pageLength: 10,
+                        responsive: true
+                    });
+                })
+                .catch(e => console.error("Error listando", e));
+        }
+
+        function formatearFecha(fechaStr) {
+            if (!fechaStr) return '-';
+            const partes = fechaStr.split('-');
+            if (partes.length === 3) {
+                return `${partes[2]}/${partes[1]}/${partes[0]}`;
+            }
+            return fechaStr;
+        }
+
+        function calcularFechaFin() {
+            const selectTipo = document.getElementById('id_tipoContrato');
+            const inputInicio = document.getElementById('fecha_inicio');
+            const inputFin = document.getElementById('fecha_fin');
+
+            if (selectTipo.value && inputInicio.value) {
+                const tipo = tiposContratoGlobal.find(t => t.id_tipoContrato == selectTipo.value);
+                if (tipo) {
+                    const dias = tipo.dias_duracion;
+                    const fechaInicio = new Date(inputInicio.value);
+                    
+                    // Sumar dias
+                    fechaInicio.setDate(fechaInicio.getDate() + dias);
+                    
+                    // Formato yyyy-mm-dd
+                    const y = fechaInicio.getFullYear();
+                    const m = String(fechaInicio.getMonth() + 1).padStart(2, '0');
+                    const d = String(fechaInicio.getDate()).padStart(2, '0');
+                    
+                    inputFin.value = `${y}-${m}-${d}`;
+                }
+            }
+        }
+
+        const modalCon = new bootstrap.Modal(document.getElementById('modalContrato'));
+
+        function abrirEditar(c) {
+            habilitarFormulario();
+            document.getElementById('id_contrato').value = c.id_contrato;
+            document.getElementById('id_cliente').value = c.id_cliente;
+            
+            // Ojo: Si la habitacion actual no está "Disponible", no saldrá en el select. 
+            const selectHab = document.getElementById('id_habitacion');
+            let existe = false;
+            for(let i=0; i<selectHab.options.length; i++){
+                if(selectHab.options[i].value == c.id_habitacion) existe = true;
+            }
+            if(!existe){
+                selectHab.innerHTML += `<option value="${c.id_habitacion}">Hab. ${c.habitacionNumero} (Actual)</option>`;
+            }
+            
+            selectHab.value = c.id_habitacion;
+            document.getElementById('id_tipoContrato').value = c.id_tipoContrato;
+            document.getElementById('fecha_inicio').value = c.fecha_inicio;
+            document.getElementById('fecha_fin').value = c.fecha_fin;
+            
+            document.getElementById('modalContratoLabel').innerText = "Editar Contrato";
+            document.getElementById('btnGuardarContrato').style.display = "inline-block";
+            modalCon.show();
+        }
+
+        function abrirVer(c) {
+            abrirEditar(c); // Reutilizamos el llenado de datos
+            document.getElementById('modalContratoLabel').innerText = "Detalles del Contrato";
+            
+            // Deshabilitar todo
+            const form = document.getElementById('formContrato');
+            const inputs = form.querySelectorAll('input, select');
+            inputs.forEach(input => input.disabled = true);
+            
+            // Ocultar boton guardar
+            document.getElementById('btnGuardarContrato').style.display = "none";
+        }
+
+        function habilitarFormulario() {
+            const form = document.getElementById('formContrato');
+            const inputs = form.querySelectorAll('input, select');
+            inputs.forEach(input => input.disabled = false);
+            document.getElementById('btnGuardarContrato').style.display = "inline-block";
+        }
+
+        function eliminarContrato(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esto finalizará el contrato y liberará la habitación.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, finalizar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = new URLSearchParams();
+                    data.append('id_contrato', id);
+                    
+                    fetch('ContratoController?action=eliminar', {
+                        method: 'POST',
+                        body: data
+                    })
+                    .then(res => res.json())
+                    .then(ok => {
+                        if(ok) {
+                            Swal.fire('¡Finalizado!', 'El contrato ha sido cerrado exitosamente.', 'success');
+                            cargarContratos();
+                        } else {
+                            Swal.fire('Error', 'No se pudo finalizar.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+
+        function guardarContrato() {
+            const form = document.getElementById('formContrato');
+            
+            if(!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const data = new URLSearchParams(new FormData(form));
+            const id = document.getElementById('id_contrato').value;
+            
+            const action = id ? 'editar' : 'guardar';
+
+            fetch('ContratoController?action=' + action, {
+                method: 'POST',
+                body: data
+            })
+            .then(res => res.json())
+            .then(ok => {
+                if (ok) {
+                    modalCon.hide();
+                    Swal.fire('¡Éxito!', 'El contrato se guardó correctamente.', 'success');
+                    cargarContratos();
+                    // Refrescar lista de habs disponibles
+                    document.getElementById('id_habitacion').innerHTML = '<option value="">Seleccione una habitación...</option>';
+                    cargarListas(); 
+                } else {
+                    Swal.fire('Error', 'Error al guardar el contrato.', 'error');
+                }
+            })
+            .catch(e => console.error("Error al guardar:", e));
+        }
+
+        // Reset modal form on open
+        document.getElementById('modalContrato').addEventListener('show.bs.modal', function () {
+            if (!document.getElementById('id_contrato').value) {
+                habilitarFormulario();
+                document.getElementById('formContrato').reset();
+                document.getElementById('id_contrato').value = "";
+                document.getElementById('modalContratoLabel').innerText = "Nuevo Contrato";
+            }
+        });
+        
+        document.getElementById('modalContrato').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('id_contrato').value = "";
+            document.getElementById('formContrato').reset();
+        });
+    </script>
+</body>
+</html>
+
