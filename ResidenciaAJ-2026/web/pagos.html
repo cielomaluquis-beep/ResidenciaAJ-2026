@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagos - Residencia A&J</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <style>
+        .pago-img-preview {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            display: none;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px dashed #ced4da;
+            padding: 5px;
+        }
+        .comprobante-link {
+            cursor: pointer;
+            text-decoration: underline;
+            color: #0d6efd;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-dashboard" ><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-habitaciones" ><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-clientes" ><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-reservas" ><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-contratos" ><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white active rounded shadow-sm mb-2" id="nav-pagos"  style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="notificaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-notificaciones" ><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-seguridad" ><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-4 p-lg-5">
+                
+                <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Pagos y Recibos</h2>
+                        <p class="text-muted mb-0">Gestión de ingresos, mensualidades y comprobantes</p>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <!-- Búsqueda eliminada porque DataTables lo hace automáticamente -->
+                        <button class="btn rounded-pill px-4 py-2 shadow-sm fw-bold text-white text-nowrap" style="background-color: #4a6cf7;" data-bs-toggle="modal" data-bs-target="#modalPago">
+                            <i class="fa-solid fa-plus me-2"></i> Registrar Pago
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabla de Pagos -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table id="table-pagos" class="table table-hover align-middle mb-0 w-100">
+                                <thead class="table-light text-muted">
+                                    <tr>
+                                        <th class="px-4 py-3">N° Operación</th>
+                                        <th class="py-3">Fecha</th>
+                                        <th class="py-3">Cliente / Detalle</th>
+                                        <th class="py-3">Concepto</th>
+                                        <th class="py-3">Método</th>
+                                        <th class="py-3 text-end">Monto (S/)</th>
+                                        <th class="py-3 text-center">Comprobante</th>
+                                        <th class="py-3 text-center">Estado</th>
+                                        <th class="py-3 text-center px-4">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaPagos">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Pago -->
+    <div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="modalPagoLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-bottom-0 pb-0 pt-4 px-4">
+                    <h5 class="modal-title fw-bold" id="modalPagoLabel">Registrar Nuevo Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="formPago">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="fecha" class="form-label text-muted fw-semibold">Fecha de Pago</label>
+                                <input type="date" id="fecha" name="fecha" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="monto" class="form-label text-muted fw-semibold">Monto Pagado (S/)</label>
+                                <input type="number" step="0.01" min="0" id="monto" name="monto" class="form-control" placeholder="Ej. 350.00" required>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-12">
+                                <label for="id_contrato" class="form-label text-muted fw-semibold">Contrato Asociado</label>
+                                <select id="id_contrato" name="id_contrato" class="form-select" required>
+                                    <option value="">Seleccione un contrato activo...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="concepto" class="form-label text-muted fw-semibold">Concepto</label>
+                                <select id="concepto" name="concepto" class="form-select" required>
+                                    <option value="Mensualidad">Mensualidad</option>
+                                    <option value="Garantia">Garantía</option>
+                                    <option value="Reserva">Adelanto de Reserva</option>
+                                    <option value="Otros">Otros (Mantenimiento, etc)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="metodo_pago" class="form-label text-muted fw-semibold">Método de Pago</label>
+                                <select id="metodo_pago" name="metodo_pago" class="form-select" required onchange="validarMetodoPago()">
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Transferencia">Transferencia Bancaria</option>
+                                    <option value="Yape">Yape</option>
+                                    <option value="Plin">Plin</option>
+                                    <option value="Tarjeta">Tarjeta de Crédito/Débito</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="img_comprobante" class="form-label text-muted fw-semibold">Comprobante de Pago <span id="comprobante_req_asterisk" class="text-danger d-none">*</span> <span class="small text-muted" id="comprobante_help">(Opcional)</span></label>
+                            <input type="file" id="img_comprobante" name="img_comprobante" class="form-control" accept="image/*,application/pdf" onchange="previewImage(event)">
+                            <img id="preview_img" class="pago-img-preview" src="" alt="Vista previa">
+                        </div>
+                        
+                        <div class="alert alert-info rounded-3 mb-0 border-0" role="alert">
+                            <i class="fa-solid fa-circle-info me-2"></i> Una vez registrado, el pago no se puede modificar, solo anular.
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary rounded-pill px-4 shadow-sm" id="btnGuardar" onclick="guardarPago()">Registrar Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Ver Comprobante -->
+    <div class="modal fade" id="modalVerComprobante" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title fw-bold">Comprobante de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <img id="imgComprobanteFull" src="" alt="Comprobante" class="img-fluid rounded shadow-sm" style="max-height: 70vh; object-fit: contain;">
+                    <a id="btnDescargarComprobante" href="" target="_blank" class="btn btn-primary mt-4 rounded-pill px-4">
+                        <i class="fa-solid fa-download me-2"></i>Descargar PDF / Abrir Original
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery and DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarContratosActivos();
+            cargarPagos();
+            
+            // Set today's date by default
+            document.getElementById('fecha').valueAsDate = new Date();
+            validarMetodoPago(); // Init validation
+        });
+
+        // User Setup
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(response => {
+                    if (!response.ok) throw new Error("No autenticado");
+                    return response.json();
+                })
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    const permisos = data.permisos || {};
+                    
+                    const roleName = usuario.rol ? usuario.rol.nombre : 'Usuario';
+                    const displayRole = roleName.charAt(0).toUpperCase() + roleName.slice(1).toLowerCase();
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = displayRole;
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+
+                    // Aplicar permisos al sidebar
+                    const modulos = ['dashboard', 'habitaciones', 'clientes', 'reservas', 'contratos', 'pagos', 'notificaciones', 'seguridad', 'catalogo', 'mis_reservas'];
+                    modulos.forEach(mod => {
+                        const navItem = document.getElementById('nav-' + mod);
+                        if (navItem) {
+                            const ruta = '/' + mod + '.html';
+                            const tienePermiso = usuario.id_rol === 1 || (permisos[ruta] && permisos[ruta].verModulo) 
+                                                || (usuario.id_rol === 3 && (mod === 'catalogo' || mod === 'mis_reservas' ));
+                            if (!tienePermiso) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar usuario:", error);
+                    window.location.href = "login.html"; // Redirigir si no está logueado
+                });
+        }
+
+        function validarMetodoPago() {
+            const metodo = document.getElementById('metodo_pago').value;
+            const inputComprobante = document.getElementById('img_comprobante');
+            const asterisco = document.getElementById('comprobante_req_asterisk');
+            const help = document.getElementById('comprobante_help');
+            
+            if (['Transferencia', 'Yape', 'Plin'].includes(metodo)) {
+                inputComprobante.required = true;
+                asterisco.classList.remove('d-none');
+                help.textContent = '(Requerido)';
+            } else {
+                inputComprobante.required = false;
+                asterisco.classList.add('d-none');
+                help.textContent = '(Opcional)';
+            }
+        }
+
+        function cargarContratosActivos() {
+            fetch('ContratoController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const select = document.getElementById('id_contrato');
+                    // Solo contratos activos (estado 1)
+                    data.filter(c => c.estado === '1').forEach(c => {
+                        select.innerHTML += `<option value="${c.id_contrato}">Contrato #${c.id_contrato} - ${c.clienteNombreCompleto} (Hab. ${c.habitacionNumero})</option>`;
+                    });
+                });
+        }
+
+        function verComprobante(imgUrl) {
+            const isPdf = imgUrl.toLowerCase().endsWith('.pdf');
+            const imgEl = document.getElementById('imgComprobanteFull');
+            const btnPdf = document.getElementById('btnDescargarComprobante');
+            
+            if (isPdf) {
+                imgEl.style.display = 'none';
+                btnPdf.style.display = 'inline-block';
+                btnPdf.href = imgUrl;
+            } else {
+                imgEl.style.display = 'inline-block';
+                imgEl.src = imgUrl;
+                btnPdf.style.display = 'none';
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('modalVerComprobante'));
+            modal.show();
+        }
+
+        function cargarPagos() {
+            fetch('PagoController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('tablaPagos');
+                    tbody.innerHTML = '';
+                    data.forEach(p => {
+                        let badgeClass = p.estado === '1' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger';
+                        let badgeText = p.estado === '1' ? 'Procesado' : 'Anulado';
+                        
+                        let comprobanteHtml = '<span class="text-muted small">-</span>';
+                        if (p.img_comprobante && p.img_comprobante !== '') {
+                            comprobanteHtml = `<a href="javascript:void(0)" onclick="verComprobante('comprobantes/${p.img_comprobante}')" class="comprobante-link"><i class="fa-solid fa-file-invoice me-1"></i>Ver</a>`;
+                        }
+
+                        const tr = `
+                        <tr>
+                            <td class="px-4 fw-bold text-muted">#${p.id_pago}</td>
+                            <td>${formatearFecha(p.fecha)}</td>
+                            <td class="fw-semibold text-dark">${p.clienteNombreCompleto}<br><small class="text-muted fw-normal">${p.detalleAsociado}</small></td>
+                            <td>${p.concepto}</td>
+                            <td><span class="badge bg-light text-dark border">${p.metodo_pago}</span></td>
+                            <td class="fw-bold text-end pe-4">S/ ${p.monto.toFixed(2)}</td>
+                            <td class="text-center">${comprobanteHtml}</td>
+                            <td class="text-center"><span class="badge ${badgeClass}">${badgeText}</span></td>
+                            <td class="text-center px-4">
+                                ${p.estado === '1' ? `<button class="btn btn-sm btn-outline-danger rounded-circle" onclick="anularPago(${p.id_pago})" title="Anular Pago"><i class="fa-solid fa-ban"></i></button>` : `<span class="text-muted small">Sin acciones</span>`}
+                            </td>
+                        </tr>`;
+                        tbody.innerHTML += tr;
+                    });
+                    
+                    // Initialize DataTables
+                    if ($.fn.DataTable.isDataTable('#table-pagos')) {
+                        $('#table-pagos').DataTable().destroy();
+                    }
+                    $('#table-pagos').DataTable({
+                        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+                        pageLength: 10,
+                        responsive: true
+                    });
+                })
+                .catch(e => console.error("Error listando", e));
+        }
+
+        function formatearFecha(fechaStr) {
+            if (!fechaStr) return '-';
+            const partes = fechaStr.split('-');
+            if (partes.length === 3) {
+                return `${partes[2]}/${partes[1]}/${partes[0]}`;
+            }
+            return fechaStr;
+        }
+
+        function previewImage(event) {
+            const img = document.getElementById('preview_img');
+            const file = event.target.files[0];
+            if (file) {
+                if (file.type.startsWith('image/')) {
+                    img.style.display = 'block';
+                    img.src = URL.createObjectURL(file);
+                } else {
+                    img.style.display = 'none'; // Para PDFs no mostramos preview
+                }
+            } else {
+                img.style.display = 'none';
+            }
+        }
+
+        function guardarPago() {
+            const form = document.getElementById('formPago');
+            if(!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const formData = new FormData(form);
+            formData.append('action', 'guardar');
+
+            const btnGuardar = document.getElementById('btnGuardar');
+            btnGuardar.disabled = true;
+            btnGuardar.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Guardando...';
+
+            fetch('PagoController', {
+                method: 'POST',
+                body: formData // Usamos FormData para enviar el archivo
+            })
+            .then(res => res.json())
+            .then(ok => {
+                if(ok) {
+                    Swal.fire({
+                        title: '¡Registrado!',
+                        text: 'El pago se ha guardado correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    });
+                    const modalCon = bootstrap.Modal.getInstance(document.getElementById('modalPago'));
+                    modalCon.hide();
+                    cargarPagos();
+                    
+                    // Reset Form
+                    form.reset();
+                    document.getElementById('fecha').valueAsDate = new Date();
+                    document.getElementById('preview_img').style.display = 'none';
+                    validarMetodoPago();
+                } else {
+                    Swal.fire('Error', 'No se pudo guardar el pago. Verifica los datos.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error', 'Hubo un error de conexión.', 'error');
+            })
+            .finally(() => {
+                btnGuardar.disabled = false;
+                btnGuardar.innerText = 'Registrar Pago';
+            });
+        }
+
+        function anularPago(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Esto anulará el pago y no se podrá deshacer.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, anular pago',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = new URLSearchParams();
+                    data.append('id_pago', id);
+                    
+                    fetch('PagoController?action=anular', {
+                        method: 'POST',
+                        body: data
+                    })
+                    .then(res => res.json())
+                    .then(ok => {
+                        if(ok) {
+                            Swal.fire('¡Anulado!', 'El pago ha sido marcado como anulado.', 'success');
+                            cargarPagos();
+                        } else {
+                            Swal.fire('Error', 'No se pudo anular el pago.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>
