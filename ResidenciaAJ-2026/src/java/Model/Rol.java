@@ -1,61 +1,50 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
-/**
- *
- * @author cielo
- */
 public class Rol {
-    private int id_Rol;
-    private String Nombre;
-    private String Descripcion;
-    private int Estado;
+    private int id_rol;
+    private String nombre;
+    private String descripcion;
+    private String estado;
 
     public Rol() {
     }
 
-    public Rol(int id_Rol, String Nombre, String Descripcion, int Estado) {
-        this.id_Rol = id_Rol;
-        this.Nombre = Nombre;
-        this.Descripcion = Descripcion;
-        this.Estado = Estado;
+    public Rol(int id_rol, String nombre, String descripcion, String estado) {
+        this.id_rol = id_rol;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.estado = estado;
     }
 
-    public int getId_Rol() {
-        return id_Rol;
+    public int getId_rol() {
+        return id_rol;
     }
 
-    public void setId_Rol(int id_Rol) {
-        this.id_Rol = id_Rol;
+    public void setId_rol(int id_rol) {
+        this.id_rol = id_rol;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
-        return Descripcion;
+        return descripcion;
     }
 
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public int getEstado() {
-        return Estado;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setEstado(int Estado) {
-        this.Estado = Estado;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
-    
-    
-    
 }
