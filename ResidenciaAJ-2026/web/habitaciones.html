@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Habitaciones - Residencia A&J</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-dashboard" ><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white active rounded shadow-sm mb-2" id="nav-habitaciones"  style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-clientes" ><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-reservas" ><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-contratos" ><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-pagos" ><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="notificaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-notificaciones" ><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-seguridad" ><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-4 p-lg-5">
+                
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Gestión de Habitaciones</h2>
+                        <p class="text-muted mb-0">RF-04: Registrar y gestionar habitaciones</p>
+                    </div>
+                    <button class="btn rounded-pill px-4 py-2 shadow-sm fw-bold text-white" style="background-color: #4a6cf7;" data-bs-toggle="modal" data-bs-target="#modalHabitacion">
+                        <i class="fa-solid fa-plus me-2"></i> Nueva Habitación
+                    </button>
+                </div>
+
+                <!-- Rooms Grid -->
+                <div class="row g-4" id="habitaciones-grid">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal for Nueva Habitacion -->
+    <div class="modal fade" id="modalHabitacion" tabindex="-1" aria-labelledby="modalHabitacionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalHabitacionLabel">Registrar Nueva Habitación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="formHabitacion">
+                        <input type="hidden" id="id_habitacion" name="id_habitacion">
+                        
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="numero" class="form-label text-muted fw-semibold">Número (Ej. 206)</label>
+                                <input type="text" id="numero" name="numero" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="piso" class="form-label text-muted fw-semibold">Piso</label>
+                                <input type="number" id="piso" name="piso" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-4">
+                                <label for="tipo" class="form-label text-muted fw-semibold">Tipo</label>
+                                <select id="tipo" name="tipo" class="form-select">
+                                    <option value="Individual">Individual</option>
+                                    <option value="Doble">Doble</option>
+                                    <option value="Suite">Suite</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="tipo_bano" class="form-label text-muted fw-semibold">Baño</label>
+                                <select id="tipo_bano" name="tipo_bano" class="form-select">
+                                    <option value="Propio" selected>Propio</option>
+                                    <option value="Compartido">Compartido</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="estado" class="form-label text-muted fw-semibold">Estado</label>
+                                <select id="estado" name="estado" class="form-select">
+                                    <option value="Disponible" selected>Disponible</option>
+                                    <option value="Ocupado">Ocupado</option>
+                                    <option value="En mantenimiento">Mantenimiento</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="precio" class="form-label text-muted fw-semibold">Precio (S/ por mes)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">S/</span>
+                                    <input type="number" id="precio" name="precio" class="form-control border-start-0" step="0.01" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="img_habitacion" class="form-label text-muted fw-semibold">Foto de la Habitación</label>
+                                <input type="file" id="img_habitacion" name="img_habitacion" class="form-control" accept="image/*">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary rounded-pill px-4 shadow-sm" onclick="guardarHabitacion()">Guardar Habitación</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            cargarUsuarioActual();
+            cargarHabitaciones();
+        });
+
+        function cargarUsuarioActual() {
+            fetch('AuthController?action=me')
+                .then(response => {
+                    if (!response.ok) throw new Error("No autenticado");
+                    return response.json();
+                })
+                .then(data => {
+                    const usuario = data.usuario || data;
+                    const permisos = data.permisos || {};
+                    
+                    const roleName = usuario.rol ? usuario.rol.nombre : 'Usuario';
+                    const displayRole = roleName.charAt(0).toUpperCase() + roleName.slice(1).toLowerCase();
+                    if(document.getElementById('user-name-display')) document.getElementById('user-name-display').textContent = usuario.nombre;
+                    if(document.getElementById('user-role-display')) document.getElementById('user-role-display').textContent = displayRole;
+                    if(document.getElementById('user-avatar-initial')) document.getElementById('user-avatar-initial').textContent = usuario.nombre.charAt(0).toUpperCase();
+
+                    // Aplicar permisos al sidebar
+                    const modulos = ['dashboard', 'habitaciones', 'clientes', 'reservas', 'contratos', 'pagos', 'notificaciones', 'seguridad', 'catalogo', 'mis_reservas'];
+                    modulos.forEach(mod => {
+                        const navItem = document.getElementById('nav-' + mod);
+                        if (navItem) {
+                            const ruta = '/' + mod + '.html';
+                            const tienePermiso = usuario.id_rol === 1 || (permisos[ruta] && permisos[ruta].verModulo) 
+                                                || (usuario.id_rol === 3 && (mod === 'catalogo' || mod === 'mis_reservas' ));
+                            if (!tienePermiso) {
+                                navItem.style.display = 'none';
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar usuario:", error);
+                    window.location.href = "login.html"; // Redirigir si no está logueado
+                });
+        }
+
+        // ==========================================
+        // CRUD HABITACIONES
+        // ==========================================
+
+        const modalHab = new bootstrap.Modal(document.getElementById('modalHabitacion'));
+
+        function cargarHabitaciones() {
+            fetch('HabitacionController?action=listar')
+                .then(res => res.json())
+                .then(data => {
+                    const grid = document.getElementById('habitaciones-grid');
+                    grid.innerHTML = '';
+                    
+                    data.forEach(h => {
+                        let badgeClass = 'bg-success';
+                        let estadoTexto = h.estado || 'Disponible';
+                        
+                        if(estadoTexto === 'Ocupado') badgeClass = 'bg-danger';
+                        if(estadoTexto === 'En mantenimiento') badgeClass = 'bg-warning text-dark';
+                        
+                        let imgSrc = h.img_habitacion ? 'assets/img/foto-habitacion/' + h.img_habitacion : 'https://placehold.co/400x200?text=Sin+Imagen';
+                        // Determinar etiqueta de cama según el tipo
+                        let camas = "1 Cama";
+                        if (h.tipo.toLowerCase().includes("doble")) camas = "2 Camas";
+                        else if (h.tipo.toLowerCase().includes("suite")) camas = "1 Queen";
+                        
+                        const card = `
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card border-0 shadow-sm rounded-4 h-100 transition-hover">
+                                <img src="${imgSrc}" class="card-img-top" style="height: 250px; object-fit: cover; border-radius: 1rem 1rem 0 0;" alt="Foto de habitación">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h4 class="fw-bold mb-0" style="color: #4a6cf7;">S/ ${h.precio.toFixed(2)}</h4>
+                                        <span class="badge ${badgeClass} text-white rounded-pill px-3 py-2">${estadoTexto}</span>
+                                    </div>
+                                    <h5 class="fw-bold text-dark mt-2">${h.tipo} ${h.numero}</h5>
+                                    
+                                    <div class="d-flex gap-3 text-muted mt-3 mb-4 small">
+                                        <span><i class="fa-solid fa-bed me-1" style="color:#4a6cf7"></i> ${camas}</span>
+                                        <span><i class="fa-solid fa-shower me-1" style="color:#12b5cb"></i> ${h.tipo_bano}</span>
+                                    </div>
+                                    
+                                    <hr class="text-muted opacity-25">
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button class="btn btn-sm btn-outline-primary fw-bold px-3 rounded-pill" onclick='abrirEditar(${JSON.stringify(h)})'><i class="fa-solid fa-pen me-1"></i> Editar</button>
+                                        <button class="btn btn-sm btn-outline-danger fw-bold px-3 rounded-pill" onclick="eliminarHabitacion(${h.id_habitacion})"><i class="fa-solid fa-trash me-1"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                        grid.innerHTML += card;
+                    });
+                })
+                .catch(e => console.error("Error listando", e));
+        }
+
+        function abrirEditar(h) {
+            document.getElementById('id_habitacion').value = h.id_habitacion;
+            document.getElementById('numero').value = h.numero;
+            document.getElementById('piso').value = h.piso;
+            document.getElementById('tipo').value = h.tipo;
+            document.getElementById('tipo_bano').value = h.tipo_bano;
+            document.getElementById('precio').value = h.precio;
+            document.getElementById('estado').value = h.estado || 'Disponible';
+            
+            document.getElementById('modalHabitacionLabel').innerText = "Editar Habitación";
+            modalHab.show();
+        }
+
+        function eliminarHabitacion(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = new URLSearchParams();
+                    data.append('id_habitacion', id);
+                    
+                    fetch('HabitacionController?action=eliminar', {
+                        method: 'POST',
+                        body: data
+                    })
+                    .then(res => res.json())
+                    .then(ok => {
+                        if(ok) {
+                            Swal.fire('¡Eliminado!', 'La habitación ha sido eliminada.', 'success');
+                            cargarHabitaciones();
+                        } else {
+                            Swal.fire('Error', 'No se pudo eliminar la habitación.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+
+        function guardarHabitacion() {
+            const form = document.getElementById('formHabitacion');
+            const data = new FormData(form);
+            const id = document.getElementById('id_habitacion').value;
+            
+            const action = id ? 'editar' : 'guardar';
+
+            fetch('HabitacionController?action=' + action, {
+                method: 'POST',
+                body: data
+            })
+            .then(res => res.json())
+            .then(ok => {
+                if (ok) {
+                    modalHab.hide();
+                    Swal.fire('¡Éxito!', 'La habitación se guardó correctamente.', 'success');
+                    cargarHabitaciones();
+                } else {
+                    Swal.fire('Error', 'Error al guardar habitación.', 'error');
+                }
+            })
+            .catch(e => console.error("Error al guardar:", e));
+        }
+
+        // Reset modal form on open
+        document.getElementById('modalHabitacion').addEventListener('show.bs.modal', function () {
+            if (!document.getElementById('id_habitacion').value) {
+                document.getElementById('formHabitacion').reset();
+                document.getElementById('modalHabitacionLabel').innerText = "Registrar Nueva Habitación";
+                document.getElementById('estado').value = "Disponible";
+            }
+        });
+        
+        document.getElementById('modalHabitacion').addEventListener('hidden.bs.modal', function () {
+            document.getElementById('formHabitacion').reset();
+            document.getElementById('id_habitacion').value = '';
+        });
+
+    </script>
+</body>
+</html>
+
