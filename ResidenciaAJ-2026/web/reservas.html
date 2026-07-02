@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reservas - Residencia A&J</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+</head>
+<body class="bg-light">
+
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-0 shadow-lg position-fixed h-100">
+                <div class="d-flex align-items-center p-4 text-white shadow-sm" style="background-color: #4a6cf7;">
+                    <div class="fs-3 me-3"><i class="fa-solid fa-building"></i></div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Residencia A&J</h5>
+                        <small class="text-white-50">Panel Operativo</small>
+                    </div>
+                </div>
+
+                <nav class="nav flex-column flex-grow-1 p-3">
+                    <a href="dashboard.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-dashboard" ><i class="fa-solid fa-border-all me-3"></i>Dashboard</a>
+                    <a href="habitaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-habitaciones" ><i class="fa-solid fa-house me-3"></i>Habitaciones</a>
+                    <a href="clientes.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-clientes" ><i class="fa-solid fa-user-group me-3"></i>Clientes</a>
+                    <a href="reservas.html" class="nav-link text-white active rounded shadow-sm mb-2" id="nav-reservas"  style="background-color: rgba(255,255,255,0.1);"><i class="fa-solid fa-calendar-check me-3"></i>Reservas</a>
+                    <a href="contratos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-contratos" ><i class="fa-solid fa-file-contract me-3"></i>Contratos</a>
+                    <a href="pagos.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-pagos" ><i class="fa-solid fa-dollar-sign me-3"></i>Pagos</a>
+                    <a href="notificaciones.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-notificaciones" ><i class="fa-regular fa-bell me-3"></i>Notificaciones</a>
+                    <a href="seguridad.html" class="nav-link text-white-50 mb-2 hover-nav" id="nav-seguridad" ><i class="fa-solid fa-shield-halved me-3"></i>Seguridad</a>
+                </nav>
+
+                <div class="p-4 mt-auto border-top border-secondary">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                            <span class="fw-bold fs-5" id="user-avatar-initial">...</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold" id="user-name-display">Cargando...</h6>
+                            <small class="text-white-50" id="user-role-display">...</small>
+                        </div>
+                    </div>
+                    <a href="login.html" class="btn btn-outline-light btn-sm w-100 rounded-pill">
+                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-9 offset-md-3 col-lg-10 offset-lg-2 p-4 p-lg-5">
+                
+                <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+                    <div>
+                        <h2 class="fw-bold text-dark mb-1">Gestión de Reservas</h2>
+                        <p class="text-muted mb-0">Revisión de solicitudes, vouchers y aprobaciones</p>
+                    </div>
+                </div>
+
+                <!-- Tabla de Reservas -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table id="table-reservas" class="table table-hover align-middle mb-0 w-100">
+                                <thead class="table-light text-muted">
+                                    <tr>
+                                        <th class="px-4 py-3">ID Reserva</th>
+                                        <th class="py-3">Fecha Solicitud</th>
+                                        <th class="py-3">Fecha Ingreso</th>
+                                        <th class="py-3">Cliente</th>
+                                        <th class="py-3">Habitación</th>
+                                        <th class="py-3">Estado</th>
+                                        <th class="px-4 py-3 text-end">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reservas-tbody">
+                                    <!-- Dinámico -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal Ver Reserva -->
+    <div class="modal fade" id="modalVerReserva" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold mb-0 text-dark">Detalle de Reserva #<span id="ver_id_reserva"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-3">
+                    <div class="bg-light p-3 rounded-3 mb-3">
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <small class="text-muted d-block mb-1">FECHA SOLICITUD</small>
+                                <span class="fw-semibold" id="ver_fecha_reserva"></span>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <small class="text-muted d-block mb-1">INGRESO POSIBLE</small>
+                                <span class="fw-semibold" id="ver_fecha_ingreso"></span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block mb-1">CLIENTE</small>
+                                <span class="fw-semibold" id="ver_cliente"></span>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted d-block mb-1">HABITACIÓN</small>
+                                <span class="fw-semibold" id="ver_habitacion"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="fw-bold text-primary mb-3">Comprobante de Pago</h6>
+                    <div class="text-center">
+                        <p class="mb-2">Monto Abonado: <span class="fw-bold text-success fs-5">S/ <span id="ver_monto"></span></span></p>
+                        <img id="ver_comprobante" src="" alt="Comprobante" class="img-fluid rounded shadow-sm" style="max-height: 300px; display: none;">
+                        <p id="ver_sin_comprobante" class="text-muted d-none"><i class="fa-solid fa-image-slash me-2"></i>No hay comprobante disponible</p>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (Requerido por DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        let tableReservas;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Verificar Auth
+            fetch('AuthController?action=me')
+                .then(res => {
+                    if(!res.ok) throw new Error("No autenticado");
+                    return res.json();
+                })
+                .then(user => {
+                    document.getElementById('user-name-display').textContent = user.nombre;
+                    document.getElementById('user-role-display').textContent = user.rol ? user.rol.nombre : 'Usuario';
+                    if(user.nombre) {
+                        document.getElementById('user-avatar-initial').textContent = user.nombre.charAt(0).toUpperCase();
+                    }
+                    cargarReservas();
+                })
+                .catch(e => {
+                    window.location.href = 'login.html';
+                });
+        });
+
+        function cargarReservas() {
+            fetch('ReservaController?action=listarTodas')
+                .then(res => res.json())
+                .then(data => {
+                    window.reservasData = data; // Guardar global para verDetalles
+                    if ($.fn.DataTable.isDataTable('#table-reservas')) {
+                        tableReservas.destroy();
+                    }
+                    
+                    const tbody = document.getElementById('reservas-tbody');
+                    tbody.innerHTML = '';
+                    
+                    data.forEach(r => {
+                        let badge = '';
+                        if (r.estado === '1') badge = '<span class="badge bg-warning text-dark px-2 py-1 rounded-pill"><i class="fa-solid fa-clock me-1"></i> Pendiente</span>';
+                        else if (r.estado === '2') badge = '<span class="badge bg-success px-2 py-1 rounded-pill"><i class="fa-solid fa-check me-1"></i> Aprobada</span>';
+                        else badge = '<span class="badge bg-danger px-2 py-1 rounded-pill"><i class="fa-solid fa-xmark me-1"></i> Rechazada</span>';
+                        
+                        let acciones = `<button class="btn btn-sm btn-outline-primary rounded-pill px-3 me-2 shadow-sm" onclick="verReserva(${r.id_reserva})" title="Ver Detalles">Ver</button>`;
+                        if (r.estado === '1') {
+                            acciones += `
+                                <button class="btn btn-sm btn-outline-success rounded-pill px-3 me-2 shadow-sm" onclick="cambiarEstado(${r.id_reserva}, '2')" title="Aprobar">Aprobar</button>
+                                <button class="btn btn-sm btn-outline-danger rounded-pill px-3 shadow-sm" onclick="cambiarEstado(${r.id_reserva}, '0')" title="Rechazar">Rechazar</button>
+                            `;
+                        }
+                        
+                        const tr = `
+                        <tr>
+                            <td class="px-4 fw-bold">#${r.id_reserva}</td>
+                            <td>${r.fecha_reserva.split(' ')[0]}</td>
+                            <td class="fw-semibold">${r.fecha_posibleIni}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2 shadow-sm" style="width:30px; height:30px; font-size:12px;">
+                                        ${r.clienteNombre ? r.clienteNombre.charAt(0) : 'C'}
+                                    </div>
+                                    ${r.clienteNombre}
+                                </div>
+                            </td>
+                            <td><span class="badge bg-light text-dark border px-2 py-1">Hab. ${r.habitacionNumero}</span></td>
+                            <td>${badge}</td>
+                            <td class="px-4 text-end">${acciones}</td>
+                        </tr>
+                        `;
+                        tbody.innerHTML += tr;
+                    });
+                    
+                    tableReservas = $('#table-reservas').DataTable({
+                        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+                        order: [[0, 'desc']],
+                        pageLength: 10
+                    });
+                })
+                .catch(e => console.error(e));
+        }
+
+        function verReserva(id) {
+            const reserva = window.reservasData.find(r => r.id_reserva === id);
+            if (!reserva) return;
+
+            document.getElementById('ver_id_reserva').textContent = reserva.id_reserva;
+            document.getElementById('ver_fecha_reserva').textContent = reserva.fecha_reserva ? reserva.fecha_reserva.split(' ')[0] : '-';
+            document.getElementById('ver_fecha_ingreso').textContent = reserva.fecha_posibleIni || '-';
+            document.getElementById('ver_cliente').textContent = reserva.clienteNombre || '-';
+            document.getElementById('ver_habitacion').textContent = 'Hab. ' + reserva.habitacionNumero;
+            
+            document.getElementById('ver_monto').textContent = reserva.pagoMonto ? parseFloat(reserva.pagoMonto).toFixed(2) : '0.00';
+            
+            const img = document.getElementById('ver_comprobante');
+            const noImg = document.getElementById('ver_sin_comprobante');
+            
+            if (reserva.pagoComprobante) {
+                img.src = "assets/img/comprobantes/" + reserva.pagoComprobante;
+                img.style.display = 'block';
+                noImg.classList.add('d-none');
+            } else {
+                img.style.display = 'none';
+                noImg.classList.remove('d-none');
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('modalVerReserva'));
+            modal.show();
+        }
+
+        function cambiarEstado(id, estado) {
+            Swal.fire({
+                title: '¿Confirmar cambio de estado?',
+                text: estado === '2' ? "Aprobarás esta reserva." : "Rechazarás esta reserva.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: estado === '2' ? '#28a745' : '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, continuar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'actualizarEstado');
+                    formData.append('id_reserva', id);
+                    formData.append('estado', estado);
+                    
+                    fetch('ReservaController', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: formData.toString()
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.status === 'success') {
+                            Swal.fire('Actualizado', 'El estado de la reserva ha sido modificado', 'success');
+                            cargarReservas();
+                        } else {
+                            Swal.fire('Error', 'No se pudo actualizar', 'error');
+                        }
+                    })
+                    .catch(e => Swal.fire('Error', 'Problema de conexión', 'error'));
+                }
+            });
+        }
+    </script>
+</body>
+</html>
