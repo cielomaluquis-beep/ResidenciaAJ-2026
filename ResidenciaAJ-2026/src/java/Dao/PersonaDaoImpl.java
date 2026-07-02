@@ -75,15 +75,15 @@ public class PersonaDaoImpl implements IPersona{
                 }
                 if (id_persona > 0) {
                     // Asignar rol por defecto ESTUDIANTE (id=3)
-                    u.setId_Rol(3);
-                    String hashedPassword = u.HashPassword(u.getPassword());
+                    u.setId_rol(3);
+                    String hashedPassword = u.HashPassword(u.getContrasena());
                     query = "INSERT INTO Usuarios(username, password, id_persona, id_Rol, estado)"
                             + " VALUES (?, ?, ?, ?, ?)";
                     st = cn.prepareStatement(query);
                     st.setString(1, p.getCorreo()); // username = correo
                     st.setString(2, hashedPassword);
                     st.setInt(3, id_persona);
-                    st.setInt(4, u.getId_Rol());
+                    st.setInt(4, u.getId_rol());
                     st.setInt(5, 1);
                     r = st.executeUpdate();
                 } else {
