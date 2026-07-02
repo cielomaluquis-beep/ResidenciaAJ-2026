@@ -1,28 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
-/**
- *
- * @author cielo
- */
 public class Habitacion {
-     private int id_habitacion;
+    private int id_habitacion;
     private String numero;
     private String tipo;
     private double precio;
-    private int estado;
+    private int piso;
+    private String tipo_bano;
+    private String img_habitacion;
+    private String estado;
 
     public Habitacion() {
     }
 
-    public Habitacion(int id_habitacion, String numero, String tipo, double precio, int estado) {
+    public Habitacion(int id_habitacion, String numero, String tipo, double precio, int piso, String tipo_bano, String img_habitacion, String estado) {
         this.id_habitacion = id_habitacion;
         this.numero = numero;
         this.tipo = tipo;
         this.precio = precio;
+        this.piso = piso;
+        this.tipo_bano = tipo_bano;
+        this.img_habitacion = img_habitacion;
         this.estado = estado;
     }
 
@@ -58,13 +56,35 @@ public class Habitacion {
         this.precio = precio;
     }
 
-    public int getEstado() {
+    public int getPiso() {
+        return piso;
+    }
+
+    public void setPiso(int piso) {
+        this.piso = piso;
+    }
+
+    public String getTipo_bano() {
+        return tipo_bano;
+    }
+
+    public void setTipo_bano(String tipo_bano) {
+        this.tipo_bano = tipo_bano;
+    }
+
+    public String getImg_habitacion() {
+        return img_habitacion;
+    }
+
+    public void setImg_habitacion(String img_habitacion) {
+        this.img_habitacion = img_habitacion;
+    }
+
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    
 }
