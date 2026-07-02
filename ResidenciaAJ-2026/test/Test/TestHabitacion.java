@@ -38,7 +38,9 @@ public class TestHabitacion {
         h.setNumero("101");
         h.setTipo("Simple");
         h.setPrecio(350.00);
-        h.setEstado(1);
+        h.setPiso(1);
+        h.setTipo_bano("Propio");
+        h.setEstado("Disponible");
         int result = dao.insert(h);
         if (result > 0) {
             System.out.println("Habitacion registrada con ID: " + h.getId_habitacion());
